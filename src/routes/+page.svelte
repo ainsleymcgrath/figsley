@@ -1,2 +1,19 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import type { ActionData } from './$types';
+
+	let input = '';
+	let error = '';
+
+	export let form: ActionData;
+</script>
+
+<h1>Figsley</h1>
+<form method="POST" action="?/renderUserInput">
+	<textarea name="userInput" bind:value={input} />
+	<input type="text" name="haa" />
+	<pre>{form?.rendered}</pre>
+	{#if error}
+		<p>{error}</p>
+	{/if}
+	<button type="submit">ok</button>
+</form>
