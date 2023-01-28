@@ -7,7 +7,6 @@
 	export let form: ActionData;
 </script>
 
-<h1>Figsley</h1>
 <form method="POST" action="?/renderUserInput">
 	<textarea name="userInput" bind:value={input} />
 	<input type="text" name="haa" />
