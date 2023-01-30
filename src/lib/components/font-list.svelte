@@ -40,6 +40,5 @@
 			bind:value={searchTerm}
 		/>
 	</div>
-	{selection.length}
 	<SearchResults {options} bind:selection />
 </figure>

@@ -7,9 +7,9 @@
 
 	let focusedSearchResultIndex = 0;
 	const keydown = (e: KeyboardEvent) => {
-		if (e.key === 'Tab') {
+		if (['Tab', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
 			e.preventDefault();
-			if (e.shiftKey) {
+			if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
 				focusedSearchResultIndex -= 1;
 			} else {
 				focusedSearchResultIndex += 1;

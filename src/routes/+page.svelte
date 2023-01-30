@@ -6,9 +6,10 @@
 	import TextPreview from '$lib/components/text-preview.svelte';
 
 	export let data: PageData;
-	const randomFont = data.fonts[Math.floor(Math.random() * data.fonts.length)];
-	let selection: Fonts[] = [randomFont];
-	let value = 'Figlet Rules';
+	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
+	const nRandomFonts = Array(5).fill(Symbol()).map(randomFont);
+	let selection: Fonts[] = nRandomFonts;
+	let value = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random() * 26)];
 </script>
 
 <section class="flex justify-center gap-x-36 mb-10">
