@@ -2,6 +2,7 @@
 	import type { Fonts } from 'figlet';
 	import figlet from 'figlet';
 	import { fontRecordsSelected } from '$lib/stores';
+	import PreviewItem from '$lib/components/preview-item.svelte';
 
 	figlet.defaults({ fontPath: 'node_modules/figlet/fonts' });
 
@@ -25,12 +26,6 @@
 
 <article class="flex flex-wrap gap-10 p-10">
 	{#each Object.entries(previews) as [title, rendered]}
-		<!-- will need copy to clipboard, remove from selection, triple-click -->
-		<figure>
-			<figcaption class="font-display">{title}</figcaption>
-			<div class="border-4 border-black rounded-lg">
-				<pre class="font-mono leading-4 m-5">{rendered}</pre>
-			</div>
-		</figure>
+		<PreviewItem {title} {rendered} />
 	{/each}
 </article>
