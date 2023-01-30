@@ -32,12 +32,12 @@
 	const selectRandom = () => {
 		clearSelection();
 		for (const font of nRandomFonts()) {
-			$fontRecordsByName[font].selected = true;
+			$fontRecordsByName[font]!.selected = true;
 		}
 	};
 </script>
 
-<section class="flex justify-center gap-x-36 mb-10">
+<section class="flex content-center justify-center gap-x-36 mb-10">
 	<div>
 		<FontList />
 		<div class="flex justify-end gap-6">
@@ -48,7 +48,7 @@
 	<textarea
 		rows="3"
 		bind:value
-		class="p-2 col-span-1 bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0"
+		class="p-2 col-span-1 bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0 h-auto w-72 self-center"
 	/>
 </section>
 

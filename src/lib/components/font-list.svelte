@@ -5,9 +5,13 @@
 
 	let searchTerm: string = '';
 
-	$: fuse = new Fuse($fontRecords, { includeMatches: true, keys: ['font'] });
+	const fuse = new Fuse($fontRecords, { includeMatches: true, keys: ['font'] });
+	$: {
+		fuse.setCollection($fontRecords);
+	}
 	$: rawSearchResults = fuse.search(searchTerm);
 	$: searchResults = !searchTerm ? $fontRecords : rawSearchResults.map((m) => m.item);
+
 	let search: HTMLInputElement;
 	const keydown = (e: KeyboardEvent) => {
 		if (e.metaKey && e.key === 'k') {
