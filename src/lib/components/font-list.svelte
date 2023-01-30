@@ -1,15 +1,20 @@
 <script lang="ts">
-	// import { fontNames } from '$lib/stores';
 	export let selection: string[] = [];
 	export let src: string[] = [];
+	let filter: string;
 </script>
 
-<section class="col-span-1 grid grid-rows-1">
-	<article class="h-96 row-span-1 justify-self-center bg-red-50">
-		<ul class="h-5/6 self-center overflow-scroll">
-			{#each src as font}
-				<li><input bind:group={selection} type="checkbox" value={font} /> {font}</li>
-			{/each}
-		</ul>
-	</article>
-</section>
+<figure class="grid">
+	<input type="text" placeholder="Search for Figlet fonts" bind:value={filter} />
+	<select
+		bind:value={selection}
+		multiple
+		class="border-slate-100 border-2 row-span-1 overflow-scroll"
+	>
+		{#each src as font}
+			{#if font.startsWith(filter) || !filter}
+				<option value={font}> {font}</option>
+			{/if}
+		{/each}
+	</select>
+</figure>

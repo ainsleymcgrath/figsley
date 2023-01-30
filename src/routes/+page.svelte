@@ -1,37 +1,24 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import FontList from '$lib/components/font-list.svelte';
 	import type { Fonts } from 'figlet';
-	import figlet from 'figlet';
-	figlet.defaults({ fontPath: 'node_modules/figlet/fonts' });
+
+	import FontList from '$lib/components/font-list.svelte';
+	import TextPreview from '$lib/components/text-preview.svelte';
 
 	export let data: PageData;
-	let selection: Fonts[] = [];
-	let previews: Partial<Record<Fonts, string>>;
-	$: previews = selection.reduce((acc, cur) => ({ ...acc, [cur]: '' }), {});
-	let value = '';
-	$: {
-		selection.forEach((font) => {
-			figlet.text(value, font, (err, data) => {
-				if (err || !data) {
-					console.log(err);
-					return;
-				}
-				previews[font] = data;
-			});
-		});
-	}
+	const randomFont = data.fonts[Math.floor(Math.random() * data.fonts.length)];
+	let selection: Fonts[] = [randomFont];
+	let value = 'Figlet Rules';
 </script>
 
-<FontList src={data.fonts} bind:selection />
-<section class="col-span-1">
-	<textarea bind:value />
-	{#each Object.entries(previews) as [title, rendered]}
-		<figure>
-			<pre class="font-mono">
-        {rendered}
-      </pre>
-			<figcaption>{title}</figcaption>
-		</figure>
-	{/each}
+<section class="col-span-1 row-span-2 flex justify-center">
+	<FontList src={data.fonts} bind:selection />
+</section>
+
+<section class="col-span-1  row-span-2 flex justify-center">
+	<textarea rows="3" bind:value class="col-span-1" />
+</section>
+
+<section class="col-span-2 flex justify-center">
+	<TextPreview bind:selection bind:value />
 </section>
