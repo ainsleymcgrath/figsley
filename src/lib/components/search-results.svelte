@@ -1,9 +1,9 @@
 <script lang="ts">
 	// import { beforeUpdate } from 'svelte';
 	import SearchResultOption from '$lib/components/search-result-option.svelte';
+	import type { FigletRecord } from '$lib/stores';
 
-	export let options: string[];
-	export let selection: string[] = [];
+	export let searchResults: FigletRecord[];
 
 	let focusedSearchResultIndex: number = 0;
 	const keydown = (e: KeyboardEvent) => {
@@ -22,7 +22,7 @@
 	on:keydown={keydown}
 	class="overflow-scroll p-2 border-black border-4 rounded-lg bg-yellow-500 outline-0"
 >
-	{#each options as option, i}
-		<SearchResultOption bind:selection font={option} focused={i === focusedSearchResultIndex} />
+	{#each searchResults as data, i}
+		<SearchResultOption focused={focusedSearchResultIndex === i} bind:data />
 	{/each}
 </ol>

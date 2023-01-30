@@ -1,35 +1,26 @@
 <script lang="ts">
-	import { beforeUpdate } from 'svelte';
+	import type { FigletRecord } from '$lib/stores';
+	import { fontRecordsByName } from '$lib/stores';
 
-	export let selection: string[] = [];
-	let item: HTMLElement;
+	export let data: FigletRecord;
+	export let focused = false;
 
-	export let focused: boolean;
-	export let font: string;
-
-	// beforeUpdate(() => {
-	// 	if (focused && item) {
-	// 		item.focus();
-	// 	}
-	// });
-
-	const addOrRemoveFromSelection = () => {
-		if (selection.includes(font)) {
-			selection = selection.filter((f) => f !== font);
-		} else {
-			selection = [...selection, font];
-		}
+	const toggleSelection = () => {
+		$fontRecordsByName = {
+			...$fontRecordsByName,
+			[data.font]: { ...data, selected: !data.selected }
+		};
 	};
 
 	const keydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
-			addOrRemoveFromSelection();
+			toggleSelection();
 		}
 	};
 
 	const click = () => {
-		addOrRemoveFromSelection();
+		toggleSelection();
 	};
 </script>
 
@@ -37,8 +28,7 @@
 	on:keydown={keydown}
 	on:click={click}
 	tabindex="-1"
-	class="focus:bg-red-500 outline-0"
-	bind:this={item}
+	class={`${data.selected && 'bg-red-500'} ${focused && 'underline'} outline-0`}
 >
-	{font}
+	{data.font}
 </li>
