@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import FontList from '$lib/atoms/font-list.svelte';
+	import FontList from '$lib/components/font-list.svelte';
 	import type { Fonts } from 'figlet';
 	import figlet from 'figlet';
 	figlet.defaults({ fontPath: 'node_modules/figlet/fonts' });
