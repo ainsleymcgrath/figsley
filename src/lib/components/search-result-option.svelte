@@ -7,11 +7,11 @@
 	export let focused: boolean;
 	export let font: string;
 
-	beforeUpdate(() => {
-		if (focused && item) {
-			item.focus();
-		}
-	});
+	// beforeUpdate(() => {
+	// 	if (focused && item) {
+	// 		item.focus();
+	// 	}
+	// });
 
 	const addOrRemoveFromSelection = () => {
 		if (selection.includes(font)) {

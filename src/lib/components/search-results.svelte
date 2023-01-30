@@ -5,7 +5,7 @@
 	export let options: string[];
 	export let selection: string[] = [];
 
-	let focusedSearchResultIndex: number;
+	let focusedSearchResultIndex: number = 0;
 	const keydown = (e: KeyboardEvent) => {
 		if (['Tab', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
 			e.preventDefault();
