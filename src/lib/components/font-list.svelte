@@ -8,8 +8,6 @@
 	const fuse = new Fuse($fontRecords, { includeMatches: true, keys: ['font'] });
 	$: rawSearchResults = fuse.search(searchTerm);
 	$: searchResults = !searchTerm ? $fontRecords : rawSearchResults.map((m) => m.item);
-	console.log(searchResults);
-	// $: searchResultInfoMap = searchResults.reduce((acc, cur) => ({ ...acc, [cur.item]: cur }), {});
 	let search: HTMLInputElement;
 	const keydown = (e: KeyboardEvent) => {
 		if (e.metaKey && e.key === 'k') {
