@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { Fonts } from 'figlet';
 
 	import FontList from '$lib/components/font-list.svelte';
 	import TextPreview from '$lib/components/text-preview.svelte';
@@ -8,30 +7,39 @@
 	import { onMount } from 'svelte';
 
 	export let data: PageData;
+	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
+	const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
 
 	onMount(() => {
 		if (data.fonts.length === Object.keys($fontRecordsByName).length) return;
+		const initalRandom = nRandomFonts();
 		for (const font of data.fonts) {
-			$fontRecordsByName[font] = { font, selected: false, searchMatchIndexes: [] };
+			$fontRecordsByName[font] = {
+				font,
+				selected: initalRandom.includes(font),
+				searchMatchIndexes: []
+			};
 		}
 	});
 
-	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
-	const nRandomFonts = Array(5).fill(Symbol()).map(randomFont);
-	let selection: Fonts[] = nRandomFonts;
 	let value = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random() * 26)];
 
 	const clearSelection = () => {
-		selection = [];
+		for (const font of data.fonts) {
+			$fontRecordsByName[font].selected = false;
+		}
 	};
 	const selectRandom = () => {
-		selection = [randomFont()];
+		clearSelection();
+		for (const font of nRandomFonts()) {
+			$fontRecordsByName[font].selected = true;
+		}
 	};
 </script>
 
 <section class="flex justify-center gap-x-36 mb-10">
 	<div>
-		<FontList bind:selection />
+		<FontList />
 		<div class="flex justify-end gap-6">
 			<button class="text-xs" on:click={clearSelection}>Deselect all</button>
 			<button class="text-xs" on:click={selectRandom}>Random</button>
@@ -45,5 +53,5 @@
 </section>
 
 <section class="flex justify-center">
-	<TextPreview bind:selection bind:value />
+	<TextPreview bind:value />
 </section>

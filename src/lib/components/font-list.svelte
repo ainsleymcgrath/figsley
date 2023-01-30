@@ -3,14 +3,12 @@
 	import SearchResults from '$lib/components/search-results.svelte';
 	import { fontRecords } from '$lib/stores';
 
-	export let selection: string[] = [];
 	let searchTerm: string = '';
 
 	const fuse = new Fuse($fontRecords, { includeMatches: true, keys: ['font'] });
 	$: rawSearchResults = fuse.search(searchTerm);
-	$: searchResults = !searchTerm
-		? $fontRecords
-		: rawSearchResults.map((m) => ({ ...m.item, searchMatchIndexes: m.matches }));
+	$: searchResults = !searchTerm ? $fontRecords : rawSearchResults.map((m) => m.item);
+	console.log(searchResults);
 	// $: searchResultInfoMap = searchResults.reduce((acc, cur) => ({ ...acc, [cur.item]: cur }), {});
 	let search: HTMLInputElement;
 	const keydown = (e: KeyboardEvent) => {
@@ -33,5 +31,5 @@
 			bind:value={searchTerm}
 		/>
 	</div>
-	<SearchResults {searchResults} bind:selection />
+	<SearchResults {searchResults} />
 </figure>
