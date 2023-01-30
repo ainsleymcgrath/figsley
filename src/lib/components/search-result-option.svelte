@@ -22,7 +22,7 @@
 	};
 
 	const keydown = (e: KeyboardEvent) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
 			addOrRemoveFromSelection();
 		}
@@ -33,6 +33,12 @@
 	};
 </script>
 
-<li on:keydown={keydown} on:click={click} tabindex="-1" class="focus:bg-red-500" bind:this={item}>
+<li
+	on:keydown={keydown}
+	on:click={click}
+	tabindex="-1"
+	class="focus:bg-red-500 outline-0"
+	bind:this={item}
+>
 	{font}
 </li>

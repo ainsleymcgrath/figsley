@@ -4,30 +4,20 @@
 	export let selection: string[] = [];
 	export let src: string[] = [];
 	let searchTerm: string = '';
-	let focusedSearchResultIndex = 0;
 
 	const fuse = new Fuse(src, { includeMatches: true });
 	$: searchResults = fuse.search(searchTerm);
 	$: options = !searchTerm ? src : searchResults.map((m) => m.item);
 	// $: searchResultInfoMap = searchResults.reduce((acc, cur) => ({ ...acc, [cur.item]: cur }), {});
 	let search: HTMLInputElement;
-	const keyup = (e: KeyboardEvent) => {
-		if (e.key === 'k' && e.metaKey) {
+	const keydown = (e: KeyboardEvent) => {
+		if (e.metaKey && e.key === 'k') {
 			search.focus();
-		}
-		if (e.key === 'Tab') {
-			if (focusedSearchResultIndex === 0 || focusedSearchResultIndex === options.length - 1) return;
-			e.preventDefault();
-			if (e.shiftKey) {
-				focusedSearchResultIndex -= 1;
-			} else {
-				focusedSearchResultIndex += 1;
-			}
 		}
 	};
 </script>
 
-<svelte:window on:keydown={keyup} />
+<svelte:window on:keydown={keydown} />
 
 <figure class="grid w-96 h-44 bg-yellow-500 gap-4">
 	<div>
