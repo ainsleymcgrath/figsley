@@ -3,7 +3,7 @@ module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
-			fontFamily: { display: ['Unbounded'], monospace: ['IBM Plex Mono'], sans: ['IBM Plex Sans'] }
+			fontFamily: { display: ['Unbounded'], mono: ['IBM Plex Mono'], sans: ['IBM Plex Sans'] }
 		}
 	},
 	plugins: []

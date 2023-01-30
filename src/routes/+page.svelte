@@ -11,14 +11,17 @@
 	let value = 'Figlet Rules';
 </script>
 
-<section class="col-span-1 row-span-2 flex justify-center">
+<section class="col-span-1 grid justify-center m-7 h-20">
 	<FontList src={data.fonts} bind:selection />
 </section>
-
-<section class="col-span-1  row-span-2 flex justify-center">
-	<textarea rows="3" bind:value class="col-span-1" />
+<section class="col-span-1 grid justify-center m-7 h-20">
+	<textarea
+		rows="3"
+		bind:value
+		class="col-span-1 bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0"
+	/>
 </section>
 
-<section class="col-span-2 flex justify-center">
+<section class="col-span-2 flex h-full justify-center overflow-scroll">
 	<TextPreview bind:selection bind:value />
 </section>

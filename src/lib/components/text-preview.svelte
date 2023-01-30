@@ -23,10 +23,10 @@
 </script>
 
 {#each Object.entries(previews) as [title, rendered]}
-	<figure>
-		<pre class="font-mono">
-        {rendered}
-      </pre>
-		<figcaption>{title}</figcaption>
+	<figure class="m-7">
+		<figcaption class="font-display">{title}</figcaption>
+		<div class="border-4 border-black rounded-lg">
+			<pre class=" font-mono leading-4 m-5">{rendered}</pre>
+		</div>
 	</figure>
 {/each}

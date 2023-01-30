@@ -4,12 +4,17 @@
 	let filter: string;
 </script>
 
-<figure class="grid">
-	<input type="text" placeholder="Search for Figlet fonts" bind:value={filter} />
+<figure class="grid w-96 h-36 bg-yellow-500 gap-4">
+	<input
+		class="bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0"
+		type="text"
+		placeholder="Search for Figlet fonts"
+		bind:value={filter}
+	/>
 	<select
 		bind:value={selection}
 		multiple
-		class="border-slate-100 border-2 row-span-1 overflow-scroll"
+		class="border-black border-4 rounded-lg bg-yellow-500 outline-0"
 	>
 		{#each src as font}
 			{#if font.startsWith(filter) || !filter}
