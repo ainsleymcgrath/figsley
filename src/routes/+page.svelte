@@ -48,7 +48,7 @@
 	<textarea
 		rows="3"
 		bind:value
-		class="p-2 col-span-1 bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0 h-auto w-72 self-center"
+		class="p-2 col-span-1 bg-yellow-500 border-4 border-black rounded-lg outline-0 h-auto w-72 self-center"
 	/>
 </section>
 

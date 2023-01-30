@@ -9,16 +9,16 @@
 	let browsing: boolean = true;
 
 	const toggleSelection = () => {
-		$fontRecordsByName = {
-			...$fontRecordsByName,
-			[data.font]: { ...data, selected: !data.selected }
-		};
+		$fontRecordsByName[data.font]!.selected = !data.selected;
 	};
 
 	const keydown = (e: KeyboardEvent) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();
 			toggleSelection();
+		}
+		if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+			e.preventDefault();
 		}
 	};
 
@@ -35,7 +35,7 @@
 </script>
 
 <li class={`${data.selected && 'bg-red-500'} `} bind:this={element}>
-	<button class="focus:underline outline-0" on:keydown={keydown} on:click={click}
-		>{data.font}</button
-	>
+	<button class="focus:underline outline-0" on:keydown={keydown} on:click={click}>
+		{data.font}
+	</button>
 </li>
