@@ -3,6 +3,7 @@
 
 	import SearchSelect from '$lib/ui/organisms/search-select.svelte';
 	import TextPreview from '$lib/components/text-preview.svelte';
+	import RenderedSelectionBrowser from '$lib/ui/organisms/rendered-selection-browser.svelte';
 	import { fontRecordsByName } from '$lib/stores';
 	import { onMount } from 'svelte';
 
@@ -35,5 +36,5 @@
 </section>
 
 <section class="flex justify-center">
-	<TextPreview bind:value />
+	<RenderedSelectionBrowser bind:value />
 </section>

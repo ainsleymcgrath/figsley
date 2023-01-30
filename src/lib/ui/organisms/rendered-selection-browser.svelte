@@ -2,7 +2,7 @@
 	import type { Fonts } from 'figlet';
 	import figlet from 'figlet';
 	import { fontRecordsSelected } from '$lib/stores';
-	import PreviewItem from '$lib/components/preview-item.svelte';
+	import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
 
 	figlet.defaults({ fontPath: 'node_modules/figlet/fonts' });
 
@@ -26,6 +26,6 @@
 
 <article class="flex flex-wrap gap-10 p-10">
 	{#each Object.entries(previews) as [title, rendered]}
-		<PreviewItem {title} {rendered} />
+		<FigletCard {title} {rendered} />
 	{/each}
 </article>
