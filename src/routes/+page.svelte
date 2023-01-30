@@ -26,7 +26,7 @@
 
 	const clearSelection = () => {
 		for (const font of data.fonts) {
-			$fontRecordsByName[font].selected = false;
+			$fontRecordsByName[font]!.selected = false;
 		}
 	};
 	const selectRandom = () => {
