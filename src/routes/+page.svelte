@@ -11,10 +11,8 @@
 	let value = 'Figlet Rules';
 </script>
 
-<section class="col-span-1 grid justify-center m-7 h-20">
+<section class="flex justify-center gap-x-36 mb-10">
 	<FontList src={data.fonts} bind:selection />
-</section>
-<section class="col-span-1 grid justify-center m-7 h-20">
 	<textarea
 		rows="3"
 		bind:value
@@ -22,6 +20,6 @@
 	/>
 </section>
 
-<section class="col-span-2 flex h-full justify-center overflow-scroll">
+<section class="flex justify-center">
 	<TextPreview bind:selection bind:value />
 </section>

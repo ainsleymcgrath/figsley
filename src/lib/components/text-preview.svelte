@@ -22,11 +22,13 @@
 	}
 </script>
 
-{#each Object.entries(previews) as [title, rendered]}
-	<figure class="m-7">
-		<figcaption class="font-display">{title}</figcaption>
-		<div class="border-4 border-black rounded-lg">
-			<pre class=" font-mono leading-4 m-5">{rendered}</pre>
-		</div>
-	</figure>
-{/each}
+<article class="flex flex-wrap gap-10 p-10">
+	{#each Object.entries(previews) as [title, rendered]}
+		<figure>
+			<figcaption class="font-display">{title}</figcaption>
+			<div class="border-4 border-black rounded-lg">
+				<pre class="font-mono leading-4 m-5">{rendered}</pre>
+			</div>
+		</figure>
+	{/each}
+</article>
