@@ -27,11 +27,7 @@
 
 <section class="flex content-center justify-center gap-x-36 mb-10">
 	<SearchSelect />
-	<textarea
-		rows="3"
-		bind:value
-		class="p-2 col-span-1 bg-yellow-500 border-4 border-black rounded-lg outline-0 h-auto w-72 self-center"
-	/>
+	<textarea rows="3" bind:value class="heavy-outline col-span-1 h-auto w-72 self-center" />
 </section>
 
 <section class="flex justify-center">
