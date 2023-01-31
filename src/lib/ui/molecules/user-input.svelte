@@ -1,4 +1,6 @@
 <script lang="ts">
+	import KbdHint from '$lib/ui/atoms/kbd-hint.svelte';
+
 	export let value = '';
 	let textarea: HTMLTextAreaElement;
 	const keydown = (e: KeyboardEvent) => {
@@ -12,5 +14,5 @@
 
 <figure class="grid h-min">
 	<textarea rows="3" bind:this={textarea} bind:value class="heavy-outline w-xs focus-border-red" />
-	<kbd class="justify-self-end annotation">cmd/ctrl + e</kbd>
+	<KbdHint key="e" />
 </figure>

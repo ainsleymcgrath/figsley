@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fontRecords } from '$lib/stores';
 	import Fuse from 'fuse.js';
+	import KbdHint from '../atoms/kbd-hint.svelte';
 
 	let search: HTMLInputElement;
 	const keydown = (e: KeyboardEvent) => {
@@ -31,5 +32,5 @@
 		placeholder="Search for Figlet fonts"
 		bind:value={searchTerm}
 	/>
-	<kbd class="justify-self-end annotation">Cmd/Ctrl + k</kbd>
+	<KbdHint key="k" />
 </p>
