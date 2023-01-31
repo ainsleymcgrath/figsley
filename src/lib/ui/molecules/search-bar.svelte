@@ -2,13 +2,10 @@
 	import { fontRecords } from '$lib/stores';
 	import Fuse from 'fuse.js';
 	import KbdHint from '../atoms/kbd-hint.svelte';
+	import { makeFocusOnMetaKeyHandler } from '$lib/dom';
 
 	let search: HTMLInputElement;
-	const keydown = (e: KeyboardEvent) => {
-		if (e.metaKey && e.key === 'k') {
-			search.focus();
-		}
-	};
+	const keydown = makeFocusOnMetaKeyHandler(() => search, 'k');
 	let searchTerm: string = '';
 	export let searchResults = $fontRecords;
 

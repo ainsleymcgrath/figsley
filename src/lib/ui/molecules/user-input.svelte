@@ -1,13 +1,10 @@
 <script lang="ts">
 	import KbdHint from '$lib/ui/atoms/kbd-hint.svelte';
+	import { makeFocusOnMetaKeyHandler } from '$lib/dom';
 
 	export let value = '';
 	let textarea: HTMLTextAreaElement;
-	const keydown = (e: KeyboardEvent) => {
-		if (e.metaKey && e.key === 'e') {
-			textarea.focus();
-		}
-	};
+	const keydown = makeFocusOnMetaKeyHandler(() => textarea, 'e');
 </script>
 
 <svelte:window on:keydown={keydown} />
