@@ -31,6 +31,6 @@
 	<UserInput bind:value />
 </section>
 
-<section class="">
+<section class="flex justify-center">
 	<RenderedSelectionBrowser {value} />
 </section>
