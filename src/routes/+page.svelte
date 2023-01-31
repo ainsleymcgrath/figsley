@@ -5,6 +5,7 @@
 	import RenderedSelectionBrowser from '$lib/ui/organisms/rendered-selection-browser.svelte';
 	import { fontRecordsByName } from '$lib/stores';
 	import { onMount } from 'svelte';
+	import UserInput from '$lib/ui/molecules/user-input.svelte';
 
 	export let data: PageData;
 	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
@@ -25,9 +26,9 @@
 	let value = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random() * 26)];
 </script>
 
-<section class="flex justify-center gap-x-36 mb-10">
+<section class="flex justify-center mb-10">
 	<SearchSelect />
-	<textarea rows="3" bind:value class="heavy-outline w-72 h-min" />
+	<UserInput bind:value />
 </section>
 
 <section class="">

@@ -26,10 +26,10 @@
 <p class="w-max grid gap-y-1">
 	<input
 		bind:this={search}
-		class="w-min heavy-outline placeholder-black focus:border-red-700"
+		class="w-min heavy-outline placeholder-black focus-border-red"
 		type="text"
 		placeholder="Search for Figlet fonts"
 		bind:value={searchTerm}
 	/>
-	<kbd class="justify-self-end annotation">Cmd/Ctrl + K</kbd>
+	<kbd class="justify-self-end annotation">Cmd/Ctrl + k</kbd>
 </p>
