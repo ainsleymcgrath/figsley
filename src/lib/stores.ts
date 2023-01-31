@@ -3,6 +3,7 @@ import { derived, writable } from 'svelte/store';
 
 export interface FigletRecord {
 	font: Fonts;
+	slug: string;
 	selected: boolean;
 	searchMatchIndexes: number[];
 }

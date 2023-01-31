@@ -18,7 +18,8 @@
 			$fontRecordsByName[font] = {
 				font,
 				selected: initalRandom.includes(font),
-				searchMatchIndexes: []
+				searchMatchIndexes: [],
+				slug: font.toLowerCase().replace(' ', '-')
 			};
 		}
 	});
