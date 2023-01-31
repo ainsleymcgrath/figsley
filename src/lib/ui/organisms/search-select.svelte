@@ -1,10 +1,12 @@
 <script lang="ts">
 	import SearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
 	import SearchBar from '$lib/ui/molecules/search-bar.svelte';
-	import { fontRecords, fontRecordsSelected, fontRecordsByName } from '$lib/stores';
+	import SelectionSummary from '$lib/ui/molecules/selection-summary.svelte';
+	import { fontRecords, fontRecordsByName } from '$lib/stores';
 	import { page } from '$app/stores';
 
 	$: data = $page.data;
+	console.log($fontRecords);
 	let searchResults = $fontRecords;
 
 	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
@@ -22,8 +24,6 @@
 			$fontRecordsByName[font]!.selected = true;
 		}
 	};
-
-	$: commaList = $fontRecordsSelected.map((s) => s.font).join(', ');
 </script>
 
 <figure class="w-md">
@@ -41,10 +41,6 @@
 		</p>
 	</div>
 	<figcaption class="px-2 py-6 italic">
-		{#if commaList}
-			Selected {commaList}
-		{:else}
-			No fonts selected
-		{/if}
+		<SelectionSummary />
 	</figcaption>
 </figure>
