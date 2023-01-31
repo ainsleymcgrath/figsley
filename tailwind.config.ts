@@ -9,12 +9,12 @@ export default defineConfig({
 	},
 	shortcuts: {
 		'heavy-outline': 'border-4 border-black rounded-lg outline-0 bg-yellow-500 p-2',
-		'heavy-outline-red': 'border-4 border-red-700 rounded-lg outline-0 bg-yellow-500 p-2',
+		'heavy-outline-red': 'border-4 border-red-500 rounded-lg outline-0 bg-yellow-500 p-2',
 		'icon-sm': 'w-5 h-5',
 		annotation: 'text-xs mx-2',
-		'focus-border-red': 'focus:border-red-700',
-		'hover-border-red': 'hover:border-red-700',
-		'hl-text': 'text-red-700'
+		'focus-border-red': 'focus:border-red-500',
+		'hover-border-red': 'hover:border-red-500',
+		'hl-text': 'text-red-500'
 	},
 	plugins: []
 });

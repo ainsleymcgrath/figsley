@@ -5,7 +5,7 @@
 	export let searchResults: FigletRecord[];
 </script>
 
-<ol class="heavy-outline overflow-scroll focus:border-red-700 h-30">
+<ol class="heavy-outline overflow-scroll focus-border-red h-30">
 	{#each searchResults as data}
 		<SelectableFontRow bind:data />
 	{/each}
