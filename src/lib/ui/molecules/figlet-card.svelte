@@ -10,24 +10,24 @@
 	const deselct = () => {
 		$fontRecordsByName[font.font]!.selected = false;
 	};
-	let showButtons = false;
+	let hovering = false;
 	const mouseenter = () => {
-		showButtons = true;
+		hovering = true;
 	};
 	const mouseleave = () => {
-		showButtons = false;
+		hovering = false;
 	};
 </script>
 
-<article class="h-min" on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
-	<h2 id={font.slug} class="flex justify-between font-display p-1">
+<article class="h-min hover-border-red" on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
+	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display p-1`}>
 		{font.font}
 	</h2>
-	<div class="border-4 border-black rounded-lg">
+	<div class={hovering ? 'heavy-outline-red' : 'heavy-outline'}>
 		<pre class="font-mono leading-4 m-5">{txt}</pre>
 	</div>
-	<div class="w-full flex justify-end px-1">
-		{#if showButtons}
+	<div class={`w-full flex justify-end px-1 h-6 ${hovering ? 'hl-text' : ''}`}>
+		{#if hovering}
 			<button on:click={copy} class="icon-sm">
 				<Icon name="copy" />
 			</button>
