@@ -9,7 +9,8 @@ export default defineConfig({
 	},
 	shortcuts: {
 		'heavy-outline': 'border-4 border-black rounded-lg outline-0 bg-yellow-500 p-2',
-		'icon-sm': 'w-5 h-5'
+		'icon-sm': 'w-5 h-5',
+		annotation: 'text-xs mx-2'
 	},
 	plugins: []
 });
