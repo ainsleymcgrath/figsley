@@ -25,11 +25,11 @@
 	let value = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')[Math.floor(Math.random() * 26)];
 </script>
 
-<section class="flex content-center justify-center gap-x-36 mb-10">
+<section class="flex justify-center gap-x-36 mb-10">
 	<SearchSelect />
-	<textarea rows="3" bind:value class="heavy-outline col-span-1 h-auto w-72 self-center" />
+	<textarea rows="3" bind:value class="heavy-outline w-72 h-min" />
 </section>
 
-<section class="flex justify-center">
-	<RenderedSelectionBrowser bind:value />
+<section class="">
+	<RenderedSelectionBrowser {value} />
 </section>

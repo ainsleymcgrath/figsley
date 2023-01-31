@@ -23,13 +23,13 @@
 
 <svelte:window on:keydown={keydown} />
 
-<p>
-	<kbd class="text-xs block">Cmd/Ctrl + K</kbd>
+<p class="w-max grid gap-y-1">
 	<input
 		bind:this={search}
-		class="p-2 bg-yellow-500 border-4 border-black rounded-lg placeholder-black placeholder:italic outline-0 focus:border-red-700"
+		class="w-min heavy-outline placeholder-black focus:border-red-700"
 		type="text"
 		placeholder="Search for Figlet fonts"
 		bind:value={searchTerm}
 	/>
+	<kbd class="justify-self-end annotation">Cmd/Ctrl + K</kbd>
 </p>
