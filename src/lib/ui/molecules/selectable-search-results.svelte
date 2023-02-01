@@ -6,7 +6,7 @@
 </script>
 
 <ol class="heavy-outline overflow-scroll focus-border-red h-30">
-	{#each searchResults as data}
+	{#each searchResults as data (data.font)}
 		<SelectableFontRow bind:data />
 	{/each}
 </ol>
