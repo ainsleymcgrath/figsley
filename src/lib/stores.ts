@@ -13,6 +13,3 @@ export const fontRecords = derived(fontRecordsByName, (mapping) => Object.values
 export const fontRecordsSelected = derived(fontRecords, (records) =>
 	records.filter((r) => r.selected)
 );
-export const fontRecordsSelectedReversed = derived(fontRecordsSelected, (records) =>
-	records.reverse()
-);
