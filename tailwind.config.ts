@@ -14,7 +14,8 @@ export default defineConfig({
 		annotation: 'text-xs mx-2',
 		'focus-border-red': 'focus:border-red-500',
 		'hover-border-red': 'hover:border-red-500',
-		'hl-text': 'text-red-500'
+		'hl-text': 'text-red-500',
+		'underline-hover-focus': 'focus:underline hover:underline outline-0'
 	},
 	plugins: []
 });
