@@ -6,7 +6,6 @@
 	export let data: FigletRecord;
 	export let focused = false;
 	let element: HTMLElement;
-	let browsing: boolean = true;
 
 	const toggleSelection = () => {
 		$fontRecordsByName[data.font]!.selected = !data.selected;
@@ -17,14 +16,10 @@
 			e.preventDefault();
 			toggleSelection();
 		}
-		if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-			e.preventDefault();
-		}
 	};
 
 	beforeUpdate(() => {
-		if (browsing || !element) return;
-		if (focused) {
+		if (element && focused) {
 			element.focus();
 		}
 	});
@@ -34,8 +29,13 @@
 	};
 </script>
 
-<li class={`${data.selected && 'bg-red-500'} `} bind:this={element}>
-	<button class="focus:underline outline-0" on:keydown={keydown} on:click={click}>
+<li class={`${data.selected && 'bg-red-500'} `}>
+	<button
+		class="focus:underline outline-0"
+		bind:this={element}
+		on:keydown={keydown}
+		on:click={click}
+	>
 		{data.font}
 	</button>
 </li>
