@@ -15,7 +15,7 @@
 	$: {
 		selection.forEach((font) => {
 			figlet.text(value, font, (err, txt) => {
-				if (err || !txt || !font) {
+				if (err || txt === undefined || !font) {
 					return;
 				}
 				previews[font.font] = { font, txt };
