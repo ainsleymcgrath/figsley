@@ -2,6 +2,8 @@
 	import { fontRecordsByName } from '$lib/stores';
 	import type { FigletRecord } from '$lib/stores';
 	import Icon from '$lib/ui/atoms/icon.svelte';
+	import { fade, scale } from 'svelte/transition';
+
 	export let font: FigletRecord;
 	export let txt: string;
 	const copy = () => {
@@ -19,7 +21,13 @@
 	};
 </script>
 
-<article class="h-min hover-border-red" on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
+<article
+	class="h-min hover-border-red"
+	on:mouseenter={mouseenter}
+	on:mouseleave={mouseleave}
+	out:scale={{ duration: 200 }}
+	in:scale={{ duration: 400 }}
+>
 	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display p-1`}>
 		{font.font}
 	</h2>

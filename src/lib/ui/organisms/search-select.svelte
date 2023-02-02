@@ -26,21 +26,19 @@
 	};
 </script>
 
-<figure class="w-md">
-	<div class="grid w-min max-w-sm h-min bg-yellow-500 gap-y-4">
-		<SearchBar bind:searchResults />
-		<p class="grid gap-y-1">
-			<span class="text-xs italic">
-				Showing {searchResults.length} of {$page.data.fonts.length} fonts
-			</span>
-			<SearchResults {searchResults} />
-			<span class="flex justify-end gap-x-2 annotation">
-				<button on:click={clearSelection}>Deselect all</button>
-				<button on:click={selectRandom}>Random</button>
-			</span>
-		</p>
-	</div>
-	<figcaption class="px-2 py-6 italic">
-		<SelectionSummary />
-	</figcaption>
-</figure>
+<!-- <figure> -->
+<article class="grid gap-y-4 h-min">
+	<SearchBar bind:searchResults />
+	<span class="text-xs italic">
+		Showing {searchResults.length} of {$page.data.fonts.length} fonts
+	</span>
+	<SearchResults {searchResults} />
+	<span class="flex justify-end gap-x-2 annotation">
+		<button on:click={clearSelection}>Deselect all</button>
+		<button on:click={selectRandom}>Random</button>
+	</span>
+</article>
+<!-- <figcaption class="px-2 py-6 italic"> -->
+<!-- 	<SelectionSummary /> -->
+<!-- </figcaption> -->
+<!-- </figure> -->

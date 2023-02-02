@@ -21,10 +21,10 @@
 
 <svelte:window on:keydown={keydown} />
 
-<p class="w-max grid gap-y-1">
+<p class="grid">
 	<input
 		bind:this={search}
-		class="w-min heavy-outline placeholder-black focus-border-red"
+		class="heavy-outline placeholder-black focus-border-red"
 		type="text"
 		placeholder="Search for Figlet fonts"
 		bind:value={searchTerm}

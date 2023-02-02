@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Fonts } from 'figlet';
 	import figlet from 'figlet';
+	import { flip } from 'svelte/animate';
 	import { fontRecordsSelected } from '$lib/stores';
 	import type { FigletRecord } from '$lib/stores';
 	import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
@@ -25,10 +26,12 @@
 </script>
 
 <article class="flex flex-wrap gap-10 p-10">
-	{#each Object.values(previews) as { font, txt }}
-		<!-- not sure when font is undefined? -->
-		{#if font}
-			<FigletCard {font} {txt} />
-		{/if}
+	{#each Object.values(previews) as { font, txt } (font)}
+		<div animate:flip={{ duration: (d) => Math.sqrt(d) * 30 }}>
+			{#if font}
+				<!-- not sure when font is undefined? -->
+				<FigletCard {font} {txt} />
+			{/if}
+		</div>
 	{/each}
 </article>
