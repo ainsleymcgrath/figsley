@@ -8,7 +8,7 @@ export interface FigletRecord {
 	searchMatchIndexes: number[];
 }
 
-export const fontRecordsByName = writable<Partial<Record<Fonts, FigletRecord>>>({});
+export const fontRecordsByName = writable<Map<Fonts, FigletRecord>>(new Map());
 export const fontRecords = derived(fontRecordsByName, (mapping) => Object.values(mapping));
 export const fontRecordsSelected = derived(fontRecords, (records) =>
 	records.filter((r) => r.selected)
