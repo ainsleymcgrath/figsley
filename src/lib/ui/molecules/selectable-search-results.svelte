@@ -3,7 +3,7 @@
 	import type { FigletRecord } from '$lib/stores';
 
 	export let searchResults: FigletRecord[];
-	let focusedIndex = 0;
+	let focusedIndex = -1;
 	const keydown = (e: KeyboardEvent) => {
 		console.log(e.key);
 		if (e.key === 'ArrowUp') {
