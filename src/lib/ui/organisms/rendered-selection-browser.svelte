@@ -9,14 +9,14 @@
 	figlet.defaults({ fontPath: 'node_modules/figlet/fonts' });
 
 	export let value: string = '';
-	$: selection = $fontRecordsSelected;
+	$: selection = $fontRecordsSelected.reverse();
 
 	let previews: Partial<Record<Fonts, { font: FigletRecord; txt: string }>> = {};
 	$: previews = selection.reduce((acc, cur) => ({ ...acc, [cur.font]: '' }), {});
 	$: {
 		selection.forEach((font) => {
 			figlet.text(value, font, (err, txt) => {
-				if (err || txt === undefined || !font) {
+				if (err || txt === undefined) {
 					return;
 				}
 				previews[font.font] = { font, txt };
