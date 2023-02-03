@@ -25,8 +25,8 @@
 	class="h-min hover-border-red"
 	on:mouseenter={mouseenter}
 	on:mouseleave={mouseleave}
-	out:scale={{ duration: 200 }}
-	in:scale={{ duration: 400 }}
+	out:scale={{ duration: 100, start: 0.8 }}
+	in:scale={{ duration: 150, start: 0.8, delay: 75 }}
 >
 	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display p-1`}>
 		{font.font}
