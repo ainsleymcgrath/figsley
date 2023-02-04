@@ -5,7 +5,6 @@
 	export let searchResults: FigletRecord[];
 	let focusedIndex = -1;
 	const keydown = (e: KeyboardEvent) => {
-		console.log(e.key);
 		if (e.key === 'ArrowUp') {
 			if (focusedIndex === 0) return;
 			e.preventDefault();

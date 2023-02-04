@@ -19,14 +19,17 @@
 				if (err || txt === undefined) {
 					return;
 				}
-				previews[font.font] = { font, txt };
+				previews[font.font] = {
+					font,
+					txt: txt === '' ? 'Press cmd/ctrl + e and type something' : txt
+				};
 			});
 		});
 	}
 </script>
 
 <article class="flex flex-wrap gap-10 p-10">
-	{#each Object.values(previews) as { font, txt } (font)}
+	{#each Object.values(previews) as { font, txt }, i (`${font}${i}`)}
 		<div animate:flip={{ duration: (d) => Math.sqrt(d) * 15 }}>
 			{#if font}
 				<!-- not sure when font is undefined? -->
