@@ -6,7 +6,6 @@
 	import { page } from '$app/stores';
 
 	$: data = $page.data;
-	console.log($fontRecords);
 	let searchResults = $fontRecords;
 
 	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
@@ -26,8 +25,7 @@
 	};
 </script>
 
-<!-- <figure> -->
-<article class="grid gap-y-4 h-min">
+<article class="grid h-min">
 	<SearchBar bind:searchResults />
 	<span class="text-xs italic">
 		Showing {searchResults.length} of {$page.data.fonts.length} fonts
@@ -38,7 +36,3 @@
 		<button on:click={selectRandom}>Random</button>
 	</span>
 </article>
-<!-- <figcaption class="px-2 py-6 italic"> -->
-<!-- 	<SelectionSummary /> -->
-<!-- </figcaption> -->
-<!-- </figure> -->

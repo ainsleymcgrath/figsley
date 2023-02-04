@@ -28,17 +28,19 @@
 	let value = '';
 </script>
 
-<section class="w-full flex justify-center">
-	<article class="grid grid-cols-1 gap-y-5 w-min-2xl p-10">
-		<UserInput bind:value />
-		<figure class="h-min">
+<article class="grid md:grid-cols-3 grid-cols-1">
+	<section class="grid grid-cols-1 ml-10">
+		<figure class="grid">
+			<UserInput bind:value />
+		</figure>
+		<figure class="grid">
 			<SearchSelect />
-			<figcaption class="px-2 py-6 italic">
+			<figcaption class="">
 				<SelectionSummary />
 			</figcaption>
 		</figure>
-	</article>
-</section>
-<section class="flex justify-center">
-	<RenderedSelectionBrowser {value} />
-</section>
+	</section>
+	<section class="flex justify-center col-span-2">
+		<RenderedSelectionBrowser {value} />
+	</section>
+</article>
