@@ -1,17 +1,23 @@
+<script context="module" lang="ts">
+	export interface PreviewMap {
+		[slug: string]: string;
+	}
+</script>
+
 <script lang="ts">
-	import { fontRecordsByName } from '$lib/stores';
 	import type { FigletRecord } from '$lib/stores';
 	import Icon from '$lib/ui/atoms/icon.svelte';
 	import { scale } from 'svelte/transition';
 
-	export let font: FigletRecord;
-	export let txt: string;
+	export let record: FigletRecord;
+	export let previewMap: PreviewMap;
 	const copy = () => {
-		navigator.clipboard.writeText(txt);
+		navigator.clipboard.writeText(previewMap[record.slug]);
 	};
 	const deselct = () => {
-		$fontRecordsByName[font.font]!.selected = false;
+		delete previewMap[record.slug];
 	};
+
 	let hovering = false;
 	const mouseenter = () => {
 		hovering = true;
@@ -28,11 +34,14 @@
 	out:scale={{ duration: 100, start: 0.8 }}
 	in:scale={{ duration: 150, start: 0.8, delay: 75 }}
 >
-	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display mb-1`}>
-		{font.font}
+	<h2
+		id={record.slug}
+		class={`${hovering ? 'hl-text' : ''} flex justify-between font-display mb-1`}
+	>
+		{record.font}
 	</h2>
 	<div class={`heavy-outline${(hovering && '-red') || ''} p-5`}>
-		<pre class="font-mono leading-4">{txt}</pre>
+		<pre class="font-mono leading-4">{previewMap[record.slug]}</pre>
 	</div>
 	<div class={`w-full flex justify-end ${hovering ? 'hl-text' : ''}`}>
 		{#if hovering}
