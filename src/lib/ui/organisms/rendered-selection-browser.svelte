@@ -31,7 +31,9 @@
 <article class="flex flex-wrap gap-10 p-10">
 	{#each Object.entries(previews) as [fontName, detail] (fontName)}
 		<div animate:flip={{ duration: (d) => Math.sqrt(d) * 15 }}>
-			<FigletCard font={fontName} txt={detail.txt} />
+			{#if detail}
+				<FigletCard font={detail.font} txt={detail.txt} />
+			{/if}
 		</div>
 	{/each}
 </article>

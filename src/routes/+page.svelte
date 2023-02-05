@@ -29,7 +29,7 @@
 </script>
 
 <article class="grid md:grid-cols-3 grid-cols-1">
-	<section class="grid grid-cols-1 ml-10">
+	<section class="grid grid-cols-1 ml-10 h-min">
 		<figure class="grid">
 			<UserInput bind:value />
 		</figure>
@@ -40,7 +40,7 @@
 			</figcaption>
 		</figure>
 	</section>
-	<section class="flex justify-center col-span-2">
+	<section class="col-span-2 flex col-span-2 overflow-scroll">
 		<RenderedSelectionBrowser {value} />
 	</section>
 </article>
