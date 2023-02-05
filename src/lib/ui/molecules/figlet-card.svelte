@@ -2,7 +2,7 @@
 	import { fontRecordsByName } from '$lib/stores';
 	import type { FigletRecord } from '$lib/stores';
 	import Icon from '$lib/ui/atoms/icon.svelte';
-	import { fade, scale } from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 
 	export let font: FigletRecord;
 	export let txt: string;
@@ -28,13 +28,13 @@
 	out:scale={{ duration: 100, start: 0.8 }}
 	in:scale={{ duration: 150, start: 0.8, delay: 75 }}
 >
-	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display p-1`}>
+	<h2 id={font.slug} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display mb-1`}>
 		{font.font}
 	</h2>
-	<div class={hovering ? 'heavy-outline-red' : 'heavy-outline'}>
-		<pre class="font-mono leading-4 m-5">{txt}</pre>
+	<div class={`heavy-outline${(hovering && '-red') || ''} p-5`}>
+		<pre class="font-mono leading-4">{txt}</pre>
 	</div>
-	<div class={`w-full flex justify-end px-1 h-6 ${hovering ? 'hl-text' : ''}`}>
+	<div class={`w-full flex justify-end ${hovering ? 'hl-text' : ''}`}>
 		{#if hovering}
 			<button on:click={copy} class="icon-sm">
 				<Icon name="copy" />
