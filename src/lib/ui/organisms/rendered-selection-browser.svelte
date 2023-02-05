@@ -28,7 +28,7 @@
 	}
 </script>
 
-<article class="flex flex-wrap gap-10 p-10">
+<article class="flex flex-wrap gap-10 px-10">
 	{#each Object.entries(previews) as [fontName, detail] (fontName)}
 		<div animate:flip={{ duration: (d) => Math.sqrt(d) * 15 }}>
 			{#if detail}

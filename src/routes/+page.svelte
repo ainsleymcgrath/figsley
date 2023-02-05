@@ -29,7 +29,7 @@
 </script>
 
 <article class="grid md:grid-cols-3 grid-cols-1">
-	<section class="grid grid-cols-1 ml-10 h-min">
+	<section class="grid grid-cols-1 h-min">
 		<figure class="grid">
 			<UserInput bind:value />
 		</figure>
