@@ -29,8 +29,13 @@
 	};
 </script>
 
-<li class={`${data.selected && 'bg-red-500'} `}>
-	<button class="underline-hover-focus" bind:this={element} on:keydown={keydown} on:click={click}>
-		{data.font}
-	</button>
+<li
+	class={`${data.selected && 'bg-red-500'} underline-hover-focus`}
+	tabindex="0"
+	role="button"
+	bind:this={element}
+	on:keydown={keydown}
+	on:click={click}
+>
+	{data.font}
 </li>
