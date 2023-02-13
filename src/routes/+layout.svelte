@@ -9,7 +9,7 @@
 		<p class="font-display text-sm font-light">
 			<a class="underline" href="http://www.figlet.org/">Figlet</a> for the
 			<a class="underline" href="https://kit.svelte.dev/">modern</a>
-			<a class="underline" href="fly.io">web</a>, by
+			<a class="underline" href="https://fly.io">web</a>, by
 			<a class="underline" href="https://ainsleymcgrath.com/">Ainsley</a>
 		</p>
 	</header>
