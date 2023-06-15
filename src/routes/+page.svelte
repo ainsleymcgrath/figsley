@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
 	import SearchSelect from '$lib/ui/organisms/search-select.svelte';
 	import RenderedSelectionBrowser from '$lib/ui/organisms/rendered-selection-browser.svelte';
 	import SelectionSummary from '$lib/ui/molecules/selection-summary.svelte';
@@ -8,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import UserInput from '$lib/ui/molecules/user-input.svelte';
 
-	export let data: PageData;
+	export let data;
 	const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
 	const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
 

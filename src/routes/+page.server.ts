@@ -1,16 +1,12 @@
-import type { PageServerLoad } from './$types';
-import figlet, { type Fonts } from 'figlet';
-import { promisify } from 'util';
+import fonts from '$lib/fonts';
 
-const asyncFigletFonts = promisify(figlet.fonts);
-const getFigletFonts = async () => await asyncFigletFonts().then((fonts) => fonts);
+export async function load() {
+	return { fonts: fonts.list() };
+}
 
-export const prerender = true;
-
-export const load: PageServerLoad = async () => {
-	const fonts = (await getFigletFonts()) as Fonts[];
-	for (const font of fonts) {
-		figlet.loadFontSync(font);
+export const actions = {
+	render: async (event) => {
+		const formData = await event.request.formData();
+		fonts.render();
 	}
-	return { fonts };
 };
