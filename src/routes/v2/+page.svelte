@@ -1,11 +1,8 @@
 <script lang="ts">
-	import type { ActionData } from './$types';
-
 	export let data;
-	export let form: ActionData;
 </script>
 
-<form method="post" action="?/render">
+<form method="get" action="?/render">
 	<input name="text" />
 	<select multiple name="font-choices">
 		{#each data.fonts as font}
@@ -15,6 +12,6 @@
 	<button type="submit">Render</button>
 </form>
 
-<pre>
-  <code>{JSON.stringify(form?.rendered, null, 2)}</code>
-</pre>
+{#each Object.values(data.rendered ?? {}) as fig}
+	<pre class="font-mono leading-4">{fig}</pre>
+{/each}
