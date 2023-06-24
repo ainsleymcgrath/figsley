@@ -1,14 +1,14 @@
 import fonts from '$lib/fonts';
-import type { Fonts } from 'figlet';
+
+import { formInputFromUrl } from '$lib/urls';
 
 export const prerender = false;
 
 export async function load({ url }) {
-  const fontChoices = url.searchParams.getAll('font-choices') as Fonts[];
-  const text = url.searchParams.get('text') as string;
+  const input = formInputFromUrl(url);
 
-  const rendered = fontChoices.reduce(
-    (acc, cur) => ({ ...acc, [cur]: fonts.render(text, cur) }),
+  const rendered = (input?.fonts ?? []).reduce(
+    (acc, cur) => ({ ...acc, [cur]: fonts.render(input?.text ?? '', cur) }),
     {}
   );
   return { fonts: fonts.list(), rendered };

@@ -35,6 +35,7 @@
   "type": "module",
   "dependencies": {
     "figlet": "^1.6.0",
-    "fuse.js": "^6.6.2"
+    "fuse.js": "^6.6.2",
+    "jsurl2": "^2.1.0"
   }
 }
