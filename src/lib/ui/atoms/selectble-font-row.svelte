@@ -1,41 +1,41 @@
 <script lang="ts">
-	import type { FigletRecord } from '$lib/stores';
-	import { fontRecordsByName } from '$lib/stores';
-	import { beforeUpdate } from 'svelte';
+  import type { FigletRecord } from '$lib/stores';
+  import { fontRecordsByName } from '$lib/stores';
+  import { beforeUpdate } from 'svelte';
 
-	export let data: FigletRecord;
-	export let focused = false;
-	let element: HTMLElement;
+  export let data: FigletRecord;
+  export let focused = false;
+  let element: HTMLElement;
 
-	const toggleSelection = () => {
-		$fontRecordsByName[data.font]!.selected = !data.selected;
-	};
+  const toggleSelection = () => {
+    $fontRecordsByName[data.font]!.selected = !data.selected;
+  };
 
-	const keydown = (e: KeyboardEvent) => {
-		if (e.key === 'Enter' || e.key === ' ') {
-			e.preventDefault();
-			toggleSelection();
-		}
-	};
+  const keydown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleSelection();
+    }
+  };
 
-	beforeUpdate(() => {
-		if (element && focused) {
-			element.focus();
-		}
-	});
+  beforeUpdate(() => {
+    if (element && focused) {
+      element.focus();
+    }
+  });
 
-	const click = () => {
-		toggleSelection();
-	};
+  const click = () => {
+    toggleSelection();
+  };
 </script>
 
 <li
-	class={`${data.selected && 'bg-red-500'} underline-hover-focus`}
-	tabindex="0"
-	role="button"
-	bind:this={element}
-	on:keydown={keydown}
-	on:click={click}
+  class={`${data.selected && 'bg-red-500'} underline-hover-focus`}
+  tabindex="0"
+  role="button"
+  bind:this={element}
+  on:keydown={keydown}
+  on:click={click}
 >
-	{data.font}
+  {data.font}
 </li>

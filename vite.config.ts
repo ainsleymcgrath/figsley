@@ -3,7 +3,7 @@ import type { UserConfig } from 'vite';
 import WindiCSS from 'vite-plugin-windicss';
 
 const config: UserConfig = {
-	plugins: [sveltekit(), WindiCSS()]
+  plugins: [sveltekit(), WindiCSS()]
 };
 
 export default config;
