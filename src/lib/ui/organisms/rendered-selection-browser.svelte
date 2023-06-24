@@ -3,7 +3,6 @@
 	import figlet from 'figlet';
 	import { flip } from 'svelte/animate';
 	import { fontRecordsSelected } from '$lib/stores';
-	import type { FigletRecord } from '$lib/stores';
 	import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
 	import type { PreviewMap } from '$lib/ui/molecules/figlet-card.svelte';
 

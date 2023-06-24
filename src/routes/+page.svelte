@@ -26,6 +26,7 @@
 	let value = '';
 </script>
 
+-> {import.meta.url}
 <article class="grid md:grid-cols-3 grid-cols-1">
 	<section class="grid grid-cols-1 h-min">
 		<figure class="grid">
@@ -33,7 +34,7 @@
 		</figure>
 		<figure class="grid">
 			<SearchSelect />
-			<figcaption class="">
+			<figcaption>
 				<SelectionSummary />
 			</figcaption>
 		</figure>
