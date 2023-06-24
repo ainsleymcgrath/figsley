@@ -1,15 +1,19 @@
-import fonts from '$lib/fonts';
+import Fonts from '$lib/fonts';
 
 import { formInputFromUrl } from '$lib/urls';
 
 export const prerender = false;
 
 export async function load({ url }) {
+  const fonts = Fonts.list();
   const input = formInputFromUrl(url);
 
-  const rendered = (input?.fonts ?? []).reduce(
-    (acc, cur) => ({ ...acc, [cur]: fonts.render(input?.text ?? '', cur) }),
+  if (input === null) return { fonts };
+
+  const rendered = input.fonts.reduce(
+    (acc, cur) => ({ ...acc, [cur]: Fonts.render(input.text, cur) }),
     {}
   );
-  return { fonts: fonts.list(), rendered };
+
+  return { fonts, rendered };
 }

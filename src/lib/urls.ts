@@ -15,7 +15,8 @@ export function formInputShrink({ text, fonts }: FormInput) {
 }
 
 export function formInputExpand(shrunken: string) {
-  const restored = JSURL.parse(shrunken);
+  // eslint-disable-next-line
+  const restored: any = JSURL.parse(shrunken);
   return { text: restored[TEXT_SHORT_KEY], fonts: restored[FONTS_SHORT_KEY] } as FormInput;
 }
 
