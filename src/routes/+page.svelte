@@ -6,6 +6,7 @@
   import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
   import { onMount } from 'svelte';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
+  import { goto } from '$app/navigation';
   export let data;
 
   let text = '';
@@ -26,6 +27,22 @@
         return { ...acc, [cur.slug]: { ...cur, hit: false } };
       }, {});
   });
+  $: searchDbKeys = Object.keys(searchDb);
+
+  const clearSelection = () => {
+    for (const slug of searchDbKeys) {
+      searchDb[slug].selected = false;
+    }
+  };
+
+  const selectRandom = () => {
+    const randomFont = () => searchDbKeys[Math.floor(Math.random() * data.fonts.length)];
+    const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
+    clearSelection();
+    for (const slug of nRandomFonts()) {
+      searchDb[slug].selected = true;
+    }
+  };
 
   $: searchResults = Object.values(searchDb).filter((f) => f.hit);
   $: selections = Object.values(searchDb).filter((v) => v.selected);
@@ -42,9 +59,13 @@
         Showing {searchResults.length} of {data.fonts.length} fonts
       </span>
       <SelectableSearchResults {searchTerm} bind:searchDb />
+      <span class="flex justify-end gap-x-2 annotation">
+        <button on:click={clearSelection}>Deselect all</button>
+        <button on:click={selectRandom}>Random</button>
+      </span>
     </article>
 
-    <form method="get" action="?/render" class="flex justify-center p-12">
+    <form method="get" action="?/render" class="grid gap-3 justify-center p-12">
       <input hidden name="-" value={short} />
       <button
         class="heavy-outline-red font-display hl-text uppercase text-3xl font-black disabled:opacity-20 disabled:font-white"
@@ -53,6 +74,7 @@
       >
         Render
       </button>
+      <button on:click={() => goto('/')} class="opacity-60 italic">Clear all</button>
     </form>
   </section>
 
