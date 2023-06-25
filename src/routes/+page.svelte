@@ -43,9 +43,15 @@
       <SelectableSearchResults {searchTerm} bind:searchDb />
     </article>
 
-    <form method="get" action="?/render">
+    <form method="get" action="?/render" class="flex justify-center p-12">
       <input hidden name="-" value={short} />
-      <button type="submit">Render</button>
+      <button
+        class="heavy-outline-red font-display hl-text uppercase text-3xl font-black disabled:opacity-20 disabled:font-white"
+        type="submit"
+        disabled={!Boolean(text) || !Boolean(selections.length)}
+      >
+        Render
+      </button>
     </form>
   </div>
 
