@@ -23,13 +23,13 @@
 </script>
 
 <article
-  class="h-min hover-border-red"
+  class="h-min hover-border-red max-w-md"
   on:mouseenter={mouseenter}
   on:mouseleave={mouseleave}
   out:scale={{ duration: 100, start: 0.8 }}
   in:scale={{ duration: 150, start: 0.8, delay: 75 }}
 >
-  <div class={`${hovering ? 'heavy-outline-red' : 'heavy-outline'} p-5`}>
+  <div class={`${hovering ? 'heavy-outline-red' : 'heavy-outline'} p-5 overflow-scroll`}>
     <pre class="font-mono leading-4">{figletText}</pre>
   </div>
   <div class={`w-full flex justify-end ${hovering ? 'hl-text' : ''} h-5`}>
