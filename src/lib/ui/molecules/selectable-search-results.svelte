@@ -6,11 +6,8 @@
   export let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
   export let searchTerm = '';
   $: corpus = [...Object.values(searchDb)];
-  $: {console.log(searchDb)}
-  $: {console.log(corpus)}
   $: selections = corpus.filter((record) => record.selected);
   $: searchResults = corpus.filter((record) => record.hit);
-  $: searchResultsCount = searchResults.length;
 
   const keydown = (e: KeyboardEvent) => {
     if (e.key === 'ArrowUp') {

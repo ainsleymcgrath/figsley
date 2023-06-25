@@ -8,7 +8,6 @@
   export let data;
 
   let text = '';
-  $: searchResultsNames = searchResults.map((v) => v.font);
 
   let searchTerm: string = '';
 
@@ -28,7 +27,8 @@
   });
 
   $: searchResults = Object.values(searchDb).filter((f) => f.hit);
-  $: short = formInputShrink({ text, fonts: searchResultsNames });
+  $: selections = Object.values(searchDb).filter((v) => v.selected);
+  $: short = formInputShrink({ text, fonts: selections.map(s => s.font) });
 </script>
 
 <UserInput_2 bind:value={text} />

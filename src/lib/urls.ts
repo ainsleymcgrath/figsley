@@ -7,7 +7,7 @@ interface FormInput {
 }
 
 const TEXT_SHORT_KEY = '.';
-const FONTS_SHORT_KEY = ',';
+const FONTS_SHORT_KEY = '+';
 
 export function formInputShrink({ text, fonts }: FormInput) {
   const short = JSURL.stringify({ [TEXT_SHORT_KEY]: text, [FONTS_SHORT_KEY]: fonts });
