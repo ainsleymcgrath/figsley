@@ -1,14 +1,15 @@
 <script lang="ts">
   import type { FigletRecord } from '$lib/stores';
-  import { fontRecordsByName } from '$lib/stores';
-  import { beforeUpdate } from 'svelte';
+
+  import { beforeUpdate, createEventDispatcher } from 'svelte';
 
   export let data: FigletRecord;
   export let focused = false;
   let element: HTMLElement;
+  const dispatch = createEventDispatcher();
 
   const toggleSelection = () => {
-    $fontRecordsByName[data.font]!.selected = !data.selected;
+    dispatch('select-font');
   };
 
   const keydown = (e: KeyboardEvent) => {
@@ -29,13 +30,12 @@
   };
 </script>
 
-<li
-  class={`${data.selected && 'bg-red-500'} underline-hover-focus`}
+<button
+  class={`${data.selected && 'bg-red-500'} underline-hover-focus block`}
   tabindex="0"
-  role="button"
   bind:this={element}
   on:keydown={keydown}
   on:click={click}
 >
   {data.font}
-</li>
+</button>

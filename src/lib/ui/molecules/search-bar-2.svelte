@@ -7,17 +7,20 @@
   let search: HTMLInputElement;
   const keydown = makeFocusOnMetaKeyHandler(() => search, 'k');
 
-  export let corpus: FigletRecord[];
-  export let searchTerm: string;
-  export let searchResults: FigletRecord[] = [];
+  export let searchTerm = '';
+  export let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
+  $: corpus = Object.values(searchDb);
 
-  const fuse = new Fuse(corpus, { includeMatches: true, keys: ['font'] });
+  const fuse = new Fuse(corpus ?? [], { includeMatches: true, keys: ['font'] });
   $: {
     fuse.setCollection(corpus);
   }
-  $: rawSearchResults = fuse.search(searchTerm);
+  $: searchResultsRaw = fuse.search(searchTerm);
+  $: searchResults = new Set(searchResultsRaw.map((r) => r.item.slug));
   $: {
-    searchResults = !searchTerm ? corpus : rawSearchResults.map((m) => m.item);
+    for (const slug of Object.keys(searchDb)) {
+      searchDb[slug].hit = searchResults.has(slug);
+    }
   }
 </script>
 

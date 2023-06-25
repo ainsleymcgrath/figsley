@@ -4,30 +4,42 @@
   import { formInputShrink } from '$lib/urls';
   import type { FigletRecord } from '$lib/stores.js';
   import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
+  import { onMount } from 'svelte';
   export let data;
 
   let text = '';
-  let searchResults: FigletRecord[] = [];
   $: searchResultsNames = searchResults.map((v) => v.font);
-  let searchTerm: string = '';
-  $: corpus = data.fonts.map((font) => ({
-    font,
-    selected: false,
-    searchMatchIndexes: [],
-    slug: font.toLowerCase().replace(' ', '-')
-  }));
 
+  let searchTerm: string = '';
+
+  // not declared reactively b/c we write to it
+  let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
+  onMount(() => {
+    searchDb = data.fonts
+      .map((font) => ({
+        font,
+        selected: false,
+        searchMatchIndexes: [],
+        slug: font.toLowerCase().replace(' ', '-')
+      }))
+      .reduce((acc, cur) => {
+        return { ...acc, [cur.slug]: { ...cur, hit: false } };
+      }, {});
+  });
+
+  $: searchResults = Object.values(searchDb).filter((f) => f.hit);
   $: short = formInputShrink({ text, fonts: searchResultsNames });
 </script>
 
 <UserInput_2 bind:value={text} />
 
 <article class="grid h-min">
-  <SearchBar bind:searchResults bind:corpus bind:searchTerm />
+  <!-- only mutates the hit attr -->
+  <SearchBar bind:searchTerm bind:searchDb />
   <span class="text-xs italic">
     Showing {searchResults.length} of {data.fonts.length} fonts
   </span>
-  <SelectableSearchResults bind:searchResults />
+  <SelectableSearchResults {searchTerm} bind:searchDb />
   <!-- <span class="flex justify-end gap-x-2 annotation"> -->
   <!--   <button on:click={clearSelection}>Deselect all</button> -->
   <!--   <button on:click={selectRandom}>Random</button> -->
