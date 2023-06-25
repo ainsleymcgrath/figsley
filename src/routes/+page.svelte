@@ -5,6 +5,7 @@
   import type { FigletRecord } from '$lib/stores.js';
   import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
   import { onMount } from 'svelte';
+  import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
   export let data;
 
   let text = '';
@@ -31,22 +32,28 @@
   $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
 </script>
 
-<section class="w-2/5">
-  <UserInput_2 bind:value={text} />
-  <article class="grid h-min">
-    <SearchBar bind:searchTerm bind:searchDb />
-    <span class="text-xs italic">
-      Showing {searchResults.length} of {data.fonts.length} fonts
-    </span>
-    <SelectableSearchResults {searchTerm} bind:searchDb />
-  </article>
+<section class="grid md:grid-cols-5">
+  <div class="md:col-span-2 sm:col-span-5">
+    <UserInput_2 bind:value={text} />
+    <article class="grid h-min">
+      <SearchBar bind:searchTerm bind:searchDb />
+      <span class="text-xs italic">
+        Showing {searchResults.length} of {data.fonts.length} fonts
+      </span>
+      <SelectableSearchResults {searchTerm} bind:searchDb />
+    </article>
 
-  <form method="get" action="?/render">
-    <input hidden name="-" value={short} />
-    <button type="submit">Render</button>
-  </form>
+    <form method="get" action="?/render">
+      <input hidden name="-" value={short} />
+      <button type="submit">Render</button>
+    </form>
+  </div>
 
-  {#each Object.values(data.rendered ?? {}) as fig}
-    <pre class="font-mono leading-4">{fig}</pre>
-  {/each}
+  <ul class="flex flex-wrap gap-10 px-10">
+    {#each Object.values(data.rendered ?? {}) as figletText}
+      <li>
+        <FigletCard {figletText} />
+      </li>
+    {/each}
+  </ul>
 </section>
