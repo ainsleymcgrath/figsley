@@ -10,7 +10,7 @@ export async function load({ url }) {
 
   if (input === null) return { fonts };
 
-  const rendered = input.fonts.reduce(
+  const rendered: Record<string, string> = input.fonts.reduce(
     (acc, cur) => ({ ...acc, [cur]: Fonts.render(input.text, cur) }),
     {}
   );

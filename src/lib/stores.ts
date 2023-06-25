@@ -6,6 +6,8 @@ export interface FigletRecord {
   slug: string;
   selected: boolean;
   searchMatchIndexes: number[];
+  hit: boolean;
+  preview: string;
 }
 
 export const fontRecordsByName = writable<Partial<Record<Fonts, FigletRecord>>>({});

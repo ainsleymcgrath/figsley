@@ -3,8 +3,9 @@
   import Icon from '$lib/ui/atoms/icon.svelte';
   import { scale } from 'svelte/transition';
 
-  export let figletText: string = '';
+  export let figletText = '';
   // export let record: FigletRecord;
+  export let title = '';
 
   const copy = () => {
     navigator.clipboard.writeText(figletText);
@@ -29,6 +30,9 @@
   out:scale={{ duration: 100, start: 0.8 }}
   in:scale={{ duration: 150, start: 0.8, delay: 75 }}
 >
+  <h2 id={title} class={`${hovering ? 'hl-text' : ''} flex justify-between font-display mb-1`}>
+    {title}
+  </h2>
   <div class={`${hovering ? 'heavy-outline-red' : 'heavy-outline'} p-5 overflow-scroll`}>
     <pre class="font-mono leading-4">{figletText}</pre>
   </div>

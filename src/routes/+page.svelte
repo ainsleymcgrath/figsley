@@ -57,9 +57,9 @@
   </section>
 
   <ol class="flex flex-wrap gap-10 px-10 md:col-span-3 sm:col-span-5">
-    {#each Object.values(data.rendered ?? {}) as figletText}
+    {#each Object.entries(data.rendered ?? {}) as [name, preview]}
       <li>
-        <FigletCard {figletText} />
+        <FigletCard figletText={preview} title={name} />
       </li>
     {/each}
   </ol>
