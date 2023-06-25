@@ -1,45 +1,52 @@
 <script lang="ts">
-  import SearchSelect from '$lib/ui/organisms/search-select.svelte';
-  import RenderedSelectionBrowser from '$lib/ui/organisms/rendered-selection-browser.svelte';
-  import SelectionSummary from '$lib/ui/molecules/selection-summary.svelte';
-  import { fontRecordsByName } from '$lib/stores';
+  import UserInput_2 from '$lib/ui/molecules/user-input.svelte';
+  import SearchBar from '$lib/ui/molecules/search-bar-2.svelte';
+  import { formInputShrink } from '$lib/urls';
+  import type { FigletRecord } from '$lib/stores.js';
+  import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
   import { onMount } from 'svelte';
-  import UserInput from '$lib/ui/molecules/user-input.svelte';
-
   export let data;
-  const randomFont = () => data.fonts[Math.floor(Math.random() * data.fonts.length)];
-  const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
 
+  let text = '';
+
+  let searchTerm: string = '';
+
+  // not declared reactively b/c we write to it
+  let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
   onMount(() => {
-    if (data.fonts.length === Object.keys($fontRecordsByName).length) return;
-    // const initalRandom = nRandomFonts();
-    for (const font of data.fonts) {
-      $fontRecordsByName[font] = {
+    searchDb = data.fonts
+      .map((font) => ({
         font,
         selected: false,
         searchMatchIndexes: [],
         slug: font.toLowerCase().replace(' ', '-')
-      };
-    }
+      }))
+      .reduce((acc, cur) => {
+        return { ...acc, [cur.slug]: { ...cur, hit: false } };
+      }, {});
   });
 
-  let value = '';
+  $: searchResults = Object.values(searchDb).filter((f) => f.hit);
+  $: selections = Object.values(searchDb).filter((v) => v.selected);
+  $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
 </script>
 
--> {import.meta.url}
-<article class="grid md:grid-cols-3 grid-cols-1">
-  <section class="grid grid-cols-1 h-min">
-    <figure class="grid">
-      <UserInput bind:value />
-    </figure>
-    <figure class="grid">
-      <SearchSelect />
-      <figcaption>
-        <SelectionSummary />
-      </figcaption>
-    </figure>
-  </section>
-  <section class="col-span-2 flex col-span-2 overflow-scroll">
-    <RenderedSelectionBrowser {value} />
-  </section>
-</article>
+<section class="w-2/5">
+  <UserInput_2 bind:value={text} />
+  <article class="grid h-min">
+    <SearchBar bind:searchTerm bind:searchDb />
+    <span class="text-xs italic">
+      Showing {searchResults.length} of {data.fonts.length} fonts
+    </span>
+    <SelectableSearchResults {searchTerm} bind:searchDb />
+  </article>
+
+  <form method="get" action="?/render">
+    <input hidden name="-" value={short} />
+    <button type="submit">Render</button>
+  </form>
+
+  {#each Object.values(data.rendered ?? {}) as fig}
+    <pre class="font-mono leading-4">{fig}</pre>
+  {/each}
+</section>

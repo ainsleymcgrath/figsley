@@ -14,6 +14,6 @@
   rows="3"
   bind:this={textarea}
   bind:value
-  class="heavy-outline focus-border-red placeholder-black"
+  class="heavy-outline focus-border-red placeholder-black w-full"
 />
 <KbdHint key="e" />
