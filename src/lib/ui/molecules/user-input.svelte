@@ -19,7 +19,7 @@
 
 {#if mode === 'read'}
   <button
-    class="italic text-left"
+    class="text-left"
     class:font-bold={value !== ''}
     on:click={async () => {
       mode = 'write';
@@ -28,13 +28,13 @@
     }}
   >
     <Box noBorder>
-      <Underline color="black">
+      <Underline italic color="black">
         {#if value === ''}
-          Click to edit input
+          Edit input
         {:else}
           {value}
-        {/if}</Underline
-      >
+        {/if}
+      </Underline>
     </Box>
   </button>
 {:else if mode === 'write'}

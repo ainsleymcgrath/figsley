@@ -7,14 +7,14 @@
 </script>
 
 <figure class="grid group" class:hover:text-red-500={highlightTextOnHover}>
-  <figcaption class="w-full grid grid-cols-3">
+  <figcaption class="w-full grid grid-cols-2">
     {#if $$slots['superscript-left']}
-      <div class="col-start-1 col-span-3">
+      <div class="col-start-1 col-span-1">
         <slot name="superscript-left" />
       </div>
     {/if}
     {#if $$slots['superscript-right']}
-      <div class="col-start-3 col-span-1 justify-self-end">
+      <div class="col-start-2 col-span-1 justify-self-end">
         <slot name="superscript-right" />
       </div>
     {/if}
@@ -30,14 +30,14 @@
   >
     <slot />
   </div>
-  <figcaption class="w-full grid grid-cols-3">
+  <figcaption class="w-full grid grid-cols-2">
     {#if $$slots['subscript-left']}
       <div class="col-span-1">
         <slot name="subscript-left" />
       </div>
     {/if}
     {#if $$slots['subscript-right']}
-      <div class="col-start-3 col-span-1 justify-self-end">
+      <div class="col-start-2 justify-self-end">
         <slot name="subscript-right" />
       </div>
     {/if}

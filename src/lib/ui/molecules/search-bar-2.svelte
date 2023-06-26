@@ -4,6 +4,7 @@
   import KbdHint from '../atoms/kbd-hint.svelte';
   import { makeFocusOnMetaKeyHandler } from '$lib/dom';
   import Box from '../atoms/box.svelte';
+  import { onMount } from 'svelte';
 
   let search: HTMLInputElement;
   const keydown = makeFocusOnMetaKeyHandler(() => search, 'k');
@@ -23,6 +24,10 @@
       searchDb[slug].hit = searchResults.has(slug);
     }
   }
+
+  onMount(() => {
+    search.focus();
+  });
 </script>
 
 <svelte:window on:keydown={keydown} />
