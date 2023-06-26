@@ -27,28 +27,35 @@
   });
 
   $: selections = Object.values(searchDb).filter((v) => v.selected);
-  $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
   $: disabled = !Boolean(text) || !Boolean(selections.length);
+  let rendered: Record<string, string>;
 </script>
 
 <div class="grid gap-y-6 w-full sm:w-lg">
   <UserInput bind:value={text} />
   <FontPicker bind:searchTerm bind:searchDb />
-  <form method="get" action="?/render" class="grid gap-3 justify-center p-12">
-    <input hidden name="-" value={short} />
+  <figure>
     <Box redBorder>
       <button
         class="font-display hl-text uppercase text-3xl font-black disabled:opacity-20 disabled:font-white"
-        type="submit"
+        on:click={async () => {
+          const params = new URLSearchParams([
+            ['text', text],
+            ...selections.map((s) => ['fonts', s.font])
+          ]);
+          const req = new Request(encodeURI(`/api/render/?${params.toString()}`));
+          const data = await fetch(req);
+          rendered = await data.json();
+        }}
         {disabled}
       >
         Render
       </button>
     </Box>
     <a href="/" class="opacity-60 italic">Clear all</a>
-  </form>
+  </figure>
 
-  {#each Object.entries(data.rendered ?? {}) as [name, preview]}
+  {#each Object.entries(rendered ?? []) as [name, preview]}
     <FigletCard figletText={preview} title={name} />
   {/each}
 </div>
