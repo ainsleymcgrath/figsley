@@ -31,7 +31,7 @@
   $: disabled = !Boolean(text) || !Boolean(selections.length);
 </script>
 
-<div class="grid gap-y-6">
+<div class="grid gap-y-6 w-full sm:w-lg">
   <UserInput bind:value={text} />
   <FontPicker bind:searchTerm bind:searchDb />
   <form method="get" action="?/render" class="grid gap-3 justify-center p-12">
