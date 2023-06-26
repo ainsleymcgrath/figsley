@@ -72,9 +72,7 @@
     <a href="/" class="opacity-60 italic">Clear all</a>
   </form>
 
-  <section class="flex flex-wrap gap-10 px-10 md:col-span-3 sm:col-span-5">
-    {#each Object.entries(data.rendered ?? {}) as [name, preview]}
-      <FigletCard figletText={preview} title={name} />
-    {/each}
-  </section>
+  {#each Object.entries(data.rendered ?? {}) as [name, preview]}
+    <FigletCard figletText={preview} title={name} />
+  {/each}
 </div>
