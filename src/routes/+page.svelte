@@ -1,5 +1,5 @@
 <script lang="ts">
-  import UserInput_2 from '$lib/ui/molecules/user-input.svelte';
+  import UserInput from '$lib/ui/molecules/user-input.svelte';
   import SearchBar from '$lib/ui/molecules/search-bar-2.svelte';
   import { formInputShrink } from '$lib/urls';
   import type { FigletRecord } from '$lib/stores.js';
@@ -28,7 +28,6 @@
   });
 
   $: searchDbKeys = Object.keys(searchDb);
-  $: searchResults = Object.values(searchDb).filter((f) => f.hit);
   $: selections = Object.values(searchDb).filter((v) => v.selected);
   $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
   $: disabled = !Boolean(text) || !Boolean(selections.length);
@@ -50,7 +49,7 @@
 </script>
 
 <div class="grid gap-y-6">
-  <UserInput_2 bind:value={text} />
+  <UserInput bind:value={text} />
   <SearchBar bind:searchTerm bind:searchDb />
   <SelectableSearchResults {searchTerm} bind:searchDb />
   <span class="flex justify-end gap-x-2 annotation">
