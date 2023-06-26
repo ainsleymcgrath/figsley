@@ -34,7 +34,7 @@
       {title}
     </h2>
     <div class="p-5 overflow-scroll max-w-xs">
-      <pre class="font-mono leading-4">{figletText}</pre>
+      <pre class="font-mono text-xs font-bold">{figletText}</pre>
     </div>
     <div slot="subscript-right" class="w-full flex justify-end h-5">
       {#if hovering}
