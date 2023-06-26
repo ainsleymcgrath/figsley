@@ -3,6 +3,7 @@
   import Fuse from 'fuse.js';
   import KbdHint from '../atoms/kbd-hint.svelte';
   import { makeFocusOnMetaKeyHandler } from '$lib/dom';
+  import Box from '../atoms/box.svelte';
 
   let search: HTMLInputElement;
   const keydown = makeFocusOnMetaKeyHandler(() => search, 'k');
@@ -26,13 +27,18 @@
 
 <svelte:window on:keydown={keydown} />
 
-<p class="grid">
+<Box>
   <input
     bind:this={search}
-    class="heavy-outline placeholder-black focus-border-red"
+    class="placeholder-black bg-inherit border-none outline-none"
     type="text"
     placeholder="Search for Figlet fonts"
     bind:value={searchTerm}
+    class:italic={searchTerm === ''}
+    class:opacity-25={searchTerm === ''}
   />
-  <KbdHint key="k" />
-</p>
+  <KbdHint key="k" slot="subscript-right" />
+  <span slot="superscript-left" class="text-xs italic">
+    Showing {searchTerm ? searchResults.size : corpus.length} of {corpus.length} fonts
+  </span>
+</Box>

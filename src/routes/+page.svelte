@@ -6,11 +6,10 @@
   import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
   import { onMount } from 'svelte';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
-  import { goto } from '$app/navigation';
+  import Box from '$lib/ui/atoms/box.svelte';
+
   export let data;
-
   let text = '';
-
   let searchTerm: string = '';
 
   // not declared reactively b/c we write to it
@@ -27,62 +26,55 @@
         return { ...acc, [cur.slug]: { ...cur, hit: false } };
       }, {});
   });
-  $: searchDbKeys = Object.keys(searchDb);
 
-  const clearSelection = () => {
+  $: searchDbKeys = Object.keys(searchDb);
+  $: searchResults = Object.values(searchDb).filter((f) => f.hit);
+  $: selections = Object.values(searchDb).filter((v) => v.selected);
+  $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
+  $: disabled = !Boolean(text) || !Boolean(selections.length);
+
+  function clearSelection() {
     for (const slug of searchDbKeys) {
       searchDb[slug].selected = false;
     }
-  };
+  }
 
-  const selectRandom = () => {
+  function selectRandom() {
     const randomFont = () => searchDbKeys[Math.floor(Math.random() * data.fonts.length)];
     const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
     clearSelection();
     for (const slug of nRandomFonts()) {
       searchDb[slug].selected = true;
     }
-  };
-
-  $: searchResults = Object.values(searchDb).filter((f) => f.hit);
-  $: selections = Object.values(searchDb).filter((v) => v.selected);
-  $: short = formInputShrink({ text, fonts: selections.map((s) => s.font) });
-  $: disabled = !Boolean(text) || !Boolean(selections.length);
+  }
 </script>
 
-<div class="grid md:grid-cols-5">
-  <section class="md:col-span-2 sm:col-span-5">
-    <UserInput_2 bind:value={text} />
-    <article class="grid h-min">
-      <SearchBar bind:searchTerm bind:searchDb />
-      <span class="text-xs italic">
-        Showing {searchResults.length} of {data.fonts.length} fonts
-      </span>
-      <SelectableSearchResults {searchTerm} bind:searchDb />
-      <span class="flex justify-end gap-x-2 annotation">
-        <button on:click={clearSelection}>Deselect all</button>
-        <button on:click={selectRandom}>Random</button>
-      </span>
-    </article>
+<div class="grid gap-y-6">
+  <UserInput_2 bind:value={text} />
+  <SearchBar bind:searchTerm bind:searchDb />
+  <SelectableSearchResults {searchTerm} bind:searchDb />
+  <span class="flex justify-end gap-x-2 annotation">
+    <button on:click={clearSelection}>Deselect all</button>
+    <button on:click={selectRandom}>Random</button>
+  </span>
 
-    <form method="get" action="?/render" class="grid gap-3 justify-center p-12">
-      <input hidden name="-" value={short} />
+  <form method="get" action="?/render" class="grid gap-3 justify-center p-12">
+    <input hidden name="-" value={short} />
+    <Box redBorder>
       <button
-        class="heavy-outline-red font-display hl-text uppercase text-3xl font-black disabled:opacity-20 disabled:font-white"
+        class="font-display hl-text uppercase text-3xl font-black disabled:opacity-20 disabled:font-white"
         type="submit"
         {disabled}
       >
         Render
       </button>
-      <button on:click={() => goto('/')} class="opacity-60 italic">Clear all</button>
-    </form>
-  </section>
+    </Box>
+    <a href="/" class="opacity-60 italic">Clear all</a>
+  </form>
 
-  <ol class="flex flex-wrap gap-10 px-10 md:col-span-3 sm:col-span-5">
+  <section class="flex flex-wrap gap-10 px-10 md:col-span-3 sm:col-span-5">
     {#each Object.entries(data.rendered ?? {}) as [name, preview]}
-      <li>
-        <FigletCard figletText={preview} title={name} />
-      </li>
+      <FigletCard figletText={preview} title={name} />
     {/each}
-  </ol>
+  </section>
 </div>

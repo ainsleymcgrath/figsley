@@ -1,6 +1,7 @@
 <script lang="ts">
-  import KbdHint from '$lib/ui/atoms/kbd-hint.svelte';
   import { makeFocusOnMetaKeyHandler } from '$lib/dom';
+  import Box from '../atoms/box.svelte';
+  import KbdHint from '../atoms/kbd-hint.svelte';
 
   export let value = '';
   let textarea: HTMLTextAreaElement;
@@ -9,11 +10,15 @@
 
 <svelte:window on:keydown={keydown} />
 
-<textarea
-  placeholder="Type something to see selected fonts Figlet-ified"
-  rows="3"
-  bind:this={textarea}
-  bind:value
-  class="heavy-outline focus-border-red placeholder-black w-full"
-/>
-<KbdHint key="e" />
+<Box>
+  <textarea
+    placeholder="Enter text here"
+    rows="3"
+    bind:this={textarea}
+    bind:value
+    class="placeholder-black w-full bg-inherit border-none outline-none"
+    class:italic={value === ''}
+    class:opacity-25={value === ''}
+  />
+  <KbdHint slot="subscript-right" key="e" />
+</Box>
