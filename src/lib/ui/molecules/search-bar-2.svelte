@@ -35,6 +35,7 @@
 <Box>
   <input
     bind:this={search}
+    on:blur
     class="placeholder-black bg-inherit border-none outline-none"
     type="text"
     placeholder="Search for Figlet fonts"
