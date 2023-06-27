@@ -76,7 +76,7 @@
             <input
               bind:checked={$fontStore[key].selected}
               type="checkbox"
-              on:mouseup={requestRender}
+              on:change={requestRender}
             />
             {$fontStore[key].font}
           </label>
