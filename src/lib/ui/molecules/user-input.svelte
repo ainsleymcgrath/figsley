@@ -4,8 +4,9 @@
   import Box from '../atoms/box.svelte';
   import KbdHint from '../atoms/kbd-hint.svelte';
   import Underline from '../atoms/underline.svelte';
+  import { fontRender, fontStoreMeta } from '$lib/stores';
 
-  export let value = '';
+  export let text = '';
   let textarea: HTMLTextAreaElement;
   const keydown = makeFocusOnMetaKeyHandler(() => textarea, 'e');
 
@@ -20,7 +21,7 @@
 {#if mode === 'read'}
   <button
     class="text-left"
-    class:font-bold={value !== ''}
+    class:font-bold={text !== ''}
     on:click={async () => {
       mode = 'write';
       await tick();
@@ -29,10 +30,10 @@
   >
     <Box noBorder>
       <Underline italic color="black">
-        {#if value === ''}
+        {#if text === ''}
           Edit input
         {:else}
-          {value}
+          {text}
         {/if}
       </Underline>
     </Box>
@@ -40,16 +41,18 @@
 {:else if mode === 'write'}
   <Box>
     <textarea
-      on:blur={() => {
+      on:blur={async () => {
         mode = 'read';
+        if (text === '' || !$fontStoreMeta.hasAnySelections) return;
+        await $fontRender(text);
       }}
       placeholder="Enter text here"
       rows="3"
       bind:this={textarea}
-      bind:value
+      bind:value={text}
       class="placeholder-black w-full bg-inherit border-none outline-none"
-      class:italic={value === ''}
-      class:opacity-25={value === ''}
+      class:italic={text === ''}
+      class:opacity-25={text === ''}
     />
     <KbdHint slot="subscript-right" key="e" />
   </Box>

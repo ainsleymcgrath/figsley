@@ -79,13 +79,36 @@ function makeFontStoreMetadataStore(base: ReturnType<typeof makeFontStore>) {
   });
 }
 
+function makeFontRenderer(
+  base: ReturnType<typeof makeFontStore>,
+  meta: ReturnType<typeof makeFontStoreMetadataStore>
+) {
+  return derived(meta, ($meta) => async (text: string) => {
+    const params = new URLSearchParams([
+      ['text', text],
+      ...$meta.selections.map((s) => ['fonts', s.font])
+    ]);
+    const data = await fetch(new Request(encodeURI(`/api/render/?${params.toString()}`)));
+    const rendered = (await data.json()) as Record<string, string>;
+    base.update(($store) => {
+      for (const [font, preview] of Object.entries(rendered)) {
+        const slug = font.toLowerCase().replace(' ', '-');
+        $store[slug].preview = preview;
+      }
+      return { ...$store };
+    });
+  });
+}
+
 function makeFigsleyStore() {
   const store = makeFontStore();
   const meta = makeFontStoreMetadataStore(store);
+  const render = makeFontRenderer(store, meta);
   return {
     fontStore: store,
-    fontStoreMeta: meta
+    fontStoreMeta: meta,
+    fontRender: render
   };
 }
 
-export const { fontStore, fontStoreMeta } = makeFigsleyStore();
+export const { fontStore, fontStoreMeta, fontRender } = makeFigsleyStore();
