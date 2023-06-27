@@ -8,5 +8,5 @@ export default {
     }
   },
   render: (text: string, font: figlet.Fonts) => figlet.textSync(text, font),
-  list: () => figlet.fontsSync()
+  list: () => figlet.fontsSync(),
 };

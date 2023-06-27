@@ -4,8 +4,8 @@ export default defineConfig({
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
-      fontFamily: { display: ['Unbounded'], mono: ['IBM Plex Mono'], sans: ['IBM Plex Sans'] }
-    }
+      fontFamily: { display: ['Unbounded'], mono: ['IBM Plex Mono'], sans: ['IBM Plex Sans'] },
+    },
   },
   shortcuts: {
     'heavy-outline': 'border-4 border-black rounded-lg outline-0 bg-yellow-500 p-2',
@@ -15,7 +15,7 @@ export default defineConfig({
     'focus-border-red': 'focus:border-red-500',
     'hover-border-red': 'hover:border-red-500',
     'hl-text': 'text-red-500',
-    'underline-hover-focus': 'focus:underline hover:underline outline-0'
+    'underline-hover-focus': 'focus:underline hover:underline outline-0',
   },
-  plugins: []
+  plugins: [],
 });

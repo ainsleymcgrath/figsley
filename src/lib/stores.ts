@@ -23,7 +23,7 @@ function makeFontStore() {
     updateRecord(record: FigletRecord) {
       update(($store) => ({
         ...$store,
-        [record.slug]: { ...record }
+        [record.slug]: { ...record },
       }));
     },
     // fuzzy search
@@ -50,14 +50,14 @@ function makeFontStore() {
                 searchMatchIndexes: [],
                 slug: font.toLowerCase().replace(' ', '-'),
                 hit: false,
-                preview: ''
+                preview: '',
               } satisfies FigletRecord)
           )
           .reduce((acc, cur) => {
             return { ...acc, [cur.slug]: { ...cur, hit: false } };
           }, {})
       );
-    }
+    },
   };
 }
 
@@ -74,7 +74,7 @@ function makeFontStoreMetadataStore(base: ReturnType<typeof makeFontStore>) {
       recordCount: corpus.length,
       searchHitCount: searchHits.length,
       selectionCount: selections.length,
-      hasAnySelections: selections.length > 0
+      hasAnySelections: selections.length > 0,
     };
   });
 }
@@ -86,7 +86,7 @@ function makeFontRenderer(
   return derived(meta, ($meta) => async (text: string) => {
     const params = new URLSearchParams([
       ['text', text],
-      ...$meta.selections.map((s) => ['fonts', s.font])
+      ...$meta.selections.map((s) => ['fonts', s.font]),
     ]);
     const data = await fetch(new Request(encodeURI(`/api/render/?${params.toString()}`)));
     const rendered = (await data.json()) as Record<string, string>;
@@ -107,7 +107,7 @@ function makeFigsleyStore() {
   return {
     fontStore: store,
     fontStoreMeta: meta,
-    fontRender: render
+    fontRender: render,
   };
 }
 
