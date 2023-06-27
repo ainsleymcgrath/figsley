@@ -84,6 +84,7 @@ function makeFontRenderer(
   meta: ReturnType<typeof makeFontStoreMetadataStore>
 ) {
   return derived(meta, ($meta) => async (text: string) => {
+    if (text === '') return;
     const params = new URLSearchParams([
       ['text', text],
       ...$meta.selections.map((s) => ['fonts', s.font]),

@@ -24,6 +24,10 @@
       $fontStore[font].selected = true;
     }
   }
+
+  async function requestRender() {
+    await $fontRender(text);
+  }
 </script>
 
 {#if searching}
@@ -31,7 +35,7 @@
     <button
       on:click={async () => {
         searching = false;
-        await $fontRender(text);
+        requestRender();
       }}
     >
       <Underline italic>Done</Underline>
@@ -69,7 +73,11 @@
       <p class="overflow-scroll h-30">
         {#each $fontStoreMeta.keys as key (key)}
           <label class="block">
-            <input bind:checked={$fontStore[key].selected} type="checkbox" />
+            <input
+              bind:checked={$fontStore[key].selected}
+              type="checkbox"
+              on:mouseup={requestRender}
+            />
             {$fontStore[key].font}
           </label>
         {/each}
