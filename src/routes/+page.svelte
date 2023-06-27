@@ -1,8 +1,6 @@
 <script lang="ts">
   import UserInput from '$lib/ui/molecules/user-input.svelte';
-  import { formInputShrink } from '$lib/urls';
-  import type { FigletRecord } from '$lib/stores.js';
-  import { onMount } from 'svelte';
+  import { fontStore } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
   import Box from '$lib/ui/atoms/box.svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
@@ -10,30 +8,15 @@
   export let data;
   let text = '';
   let searchTerm: string = '';
-
-  // not declared reactively b/c we write to it
-  let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
-  onMount(() => {
-    searchDb = data.fonts
-      .map((font) => ({
-        font,
-        selected: false,
-        searchMatchIndexes: [],
-        slug: font.toLowerCase().replace(' ', '-')
-      }))
-      .reduce((acc, cur) => {
-        return { ...acc, [cur.slug]: { ...cur, hit: false } };
-      }, {});
-  });
-
-  $: selections = Object.values(searchDb).filter((v) => v.selected);
+  $: fontStore.seed(data.fonts);
+  $: selections = $fontStore.selections;
   $: disabled = !Boolean(text) || !Boolean(selections.length);
   let rendered: Record<string, string>;
 </script>
 
 <div class="grid gap-y-6 w-full sm:w-lg">
   <UserInput bind:value={text} />
-  <FontPicker bind:searchTerm bind:searchDb />
+  <FontPicker bind:searchTerm />
   <figure>
     <Box redBorder>
       <button

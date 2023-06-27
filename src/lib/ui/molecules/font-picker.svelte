@@ -1,36 +1,27 @@
 <script lang="ts">
-  import type { FigletRecord } from '$lib/stores';
-  import SearchBar from '$lib/ui/molecules/search-bar-2.svelte';
-  import SelectableSearchResults from '$lib/ui/molecules/selectable-search-results.svelte';
+  import { fontStore } from '$lib/stores';
   import Box from '../atoms/box.svelte';
   import Underline from '../atoms/underline.svelte';
 
   export let searchTerm = '';
-  export let searchDb: Record<string, FigletRecord & { hit: boolean }> = {};
-  let searching = false;
+  $: fontStore.search(searchTerm);
+  $: selectSrc = $fontStore.searchHitCount ? $fontStore.searchHits : $fontStore.corpus;
 
-  $: searchDbKeys = Object.keys(searchDb);
-  $: corpus = [...Object.values(searchDb)];
-  $: selections = corpus.filter((record) => record.selected);
-
-  function clearSelection() {
-    for (const slug of searchDbKeys) {
-      searchDb[slug].selected = false;
-    }
-  }
+  let searching = true;
 
   function selectRandom() {
-    const randomFont = () => searchDbKeys[Math.floor(Math.random() * searchDbKeys.length)];
-    const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
-    clearSelection();
-    for (const slug of nRandomFonts()) {
-      searchDb[slug].selected = true;
-    }
+    // const searchDbKeys = Object.keys($fontStore);
+    // const randomFont = () => searchDbKeys[Math.floor(Math.random() * searchDbKeys.length)];
+    // const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
+    fontStore.clearSelection();
+    // for (const font of nRandomFonts()) {
+    //   fontStore.updateRecord({ ...$fontStore[font], selected: true });
+    // }
   }
 </script>
 
-<Box noBorder>
-  {#if searching}
+{#if searching}
+  <Box noBorder>
     <button
       on:click={() => {
         searching = false;
@@ -38,9 +29,11 @@
     >
       <Underline italic>Done</Underline>
     </button>
-  {/if}
-  <figure class="grid gap-6">
-    {#if !searching}
+  </Box>
+{/if}
+<figure class="grid gap-6">
+  {#if !searching}
+    <Box noBorder>
       <button
         class="text-left"
         on:click={() => {
@@ -49,25 +42,56 @@
       >
         <Underline italic>Choose fonts</Underline>
       </button>
-    {:else}
-      <SearchBar bind:searchTerm bind:searchDb />
-      <SelectableSearchResults {searchTerm} bind:searchDb />
-    {/if}
-    <figcaption>
-      {#if selections.length === 0}
-        No fonts selected
-      {:else}
-        Selected {selections.length} font{selections.length === 1 ? '' : 's'}:<br />
-        {#each selections as font}
-          <a href={`#${font.slug}`} class="mr-6 hover:underline">{font.font}</a>
+    </Box>
+  {:else}
+    <Box>
+      <input
+        class="placeholder-black bg-inherit border-none outline-none"
+        type="text"
+        placeholder="Search for Figlet fonts"
+        bind:value={searchTerm}
+        class:italic={searchTerm === ''}
+        class:opacity-25={searchTerm === ''}
+      />
+      <span slot="superscript-left" class="text-xs italic">
+        Showing {searchTerm ? $fontStore.searchHitCount : $fontStore.corpus.length} of {$fontStore.recordCount}
+        fonts
+      </span>
+    </Box>
+    <Box>
+      <p class="overflow-scroll h-30">
+        {#each selectSrc as record (record.slug)}
+          <label class="block">
+            <input
+              bind:checked={record.selected}
+              on:change={() => {
+                console.log(record.selected);
+                fontStore.updateRecord(record);
+              }}
+              type="checkbox"
+            />
+            {record.font}
+          </label>
         {/each}
-      {/if}
-    </figcaption>
-  </figure>
-  {#if selections.length > 0}
-    <span class="flex justify-end gap-x-2 annotation">
-      <button on:click={clearSelection}>Deselect all</button>
-      <button on:click={selectRandom}>Random</button>
-    </span>
+      </p>
+    </Box>
   {/if}
-</Box>
+  <figcaption>
+    {#if $fontStore.selections.length === 0}
+      No fonts selected
+    {:else}
+      Selected {$fontStore.selections.length} font{$fontStore.selections.length === 1
+        ? ''
+        : 's'}:<br />
+      {#each $fontStore.selections as font}
+        <a href={`#${font.slug}`} class="mr-6 hover:underline">{font.font}</a>
+      {/each}
+    {/if}
+    <p class="flex justify-end gap-x-2 annotation">
+      <button on:click={fontStore.clearSelection} disabled={$fontStore.selections.length === 0}>
+        Deselect all
+      </button>
+      <button on:click={selectRandom}>Select Random</button>
+    </p>
+  </figcaption>
+</figure>
