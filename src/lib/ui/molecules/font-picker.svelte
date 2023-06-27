@@ -72,14 +72,16 @@
     <Box>
       <p class="overflow-scroll h-30">
         {#each $fontStoreMeta.keys as key (key)}
-          <label class="block">
-            <input
-              bind:checked={$fontStore[key].selected}
-              type="checkbox"
-              on:change={requestRender}
-            />
-            {$fontStore[key].font}
-          </label>
+          {#if searchTerm === '' || $fontStore[key].hit}
+            <label class="block">
+              <input
+                bind:checked={$fontStore[key].selected}
+                type="checkbox"
+                on:change={requestRender}
+              />
+              {$fontStore[key].font}
+            </label>
+          {/if}
         {/each}
       </p>
     </Box>

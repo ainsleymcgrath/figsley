@@ -9,11 +9,7 @@
   export let text = '';
   let textarea: HTMLTextAreaElement;
   const keydown = makeFocusOnMetaKeyHandler(() => textarea, 'e');
-
   let mode: 'read' | 'write' = 'read';
-  // on click, become current form
-  //    and also maybe focus
-  // on blur || cmd + enter, return to viewonly
 </script>
 
 <svelte:window on:keydown={keydown} />

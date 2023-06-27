@@ -20,12 +20,6 @@ function makeFontStore() {
     update,
     subscribe,
     fuse,
-    updateRecord(record: FigletRecord) {
-      update(($store) => ({
-        ...$store,
-        [record.slug]: { ...record },
-      }));
-    },
     // fuzzy search
     search(searchTerm: string) {
       const searchResultsRaw = fuse.search(searchTerm);
@@ -64,6 +58,7 @@ function makeFontStore() {
 function makeFontStoreMetadataStore(base: ReturnType<typeof makeFontStore>) {
   return derived(base, ($store) => {
     const corpus = [...Object.values($store)];
+    base.fuse.setCollection(corpus);
     const selections = corpus.filter((v) => v.selected);
     const searchHits = corpus.filter((v) => v.hit);
     return {
