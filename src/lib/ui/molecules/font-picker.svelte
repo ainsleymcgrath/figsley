@@ -1,22 +1,27 @@
 <script lang="ts">
-  import { fontStore } from '$lib/stores';
+  import { fontStore, fontStoreMeta } from '$lib/stores';
   import Box from '../atoms/box.svelte';
   import Underline from '../atoms/underline.svelte';
 
   export let searchTerm = '';
   $: fontStore.search(searchTerm);
-  $: selectSrc = $fontStore.searchHitCount ? $fontStore.searchHits : $fontStore.corpus;
 
   let searching = true;
 
+  function deselectAll() {
+    for (const selection of $fontStoreMeta.selections) {
+      $fontStore[selection.slug].selected = false;
+    }
+  }
+
   function selectRandom() {
-    // const searchDbKeys = Object.keys($fontStore);
-    // const randomFont = () => searchDbKeys[Math.floor(Math.random() * searchDbKeys.length)];
-    // const nRandomFonts = () => Array(5).fill(Symbol()).map(randomFont);
-    fontStore.clearSelection();
-    // for (const font of nRandomFonts()) {
-    //   fontStore.updateRecord({ ...$fontStore[font], selected: true });
-    // }
+    deselectAll();
+    const randomFontKey = () =>
+      $fontStoreMeta.keys[Math.floor(Math.random() * $fontStoreMeta.recordCount)];
+    const nRandomFonts = Array(5).fill(Symbol()).map(randomFontKey);
+    for (const font of nRandomFonts) {
+      $fontStore[font].selected = true;
+    }
   }
 </script>
 
@@ -54,41 +59,34 @@
         class:opacity-25={searchTerm === ''}
       />
       <span slot="superscript-left" class="text-xs italic">
-        Showing {searchTerm ? $fontStore.searchHitCount : $fontStore.corpus.length} of {$fontStore.recordCount}
+        Showing {searchTerm ? $fontStoreMeta.searchHitCount : $fontStoreMeta.corpus.length} of {$fontStore.recordCount}
         fonts
       </span>
     </Box>
     <Box>
       <p class="overflow-scroll h-30">
-        {#each selectSrc as record (record.slug)}
+        {#each $fontStoreMeta.keys as key (key)}
           <label class="block">
-            <input
-              bind:checked={record.selected}
-              on:change={() => {
-                console.log(record.selected);
-                fontStore.updateRecord(record);
-              }}
-              type="checkbox"
-            />
-            {record.font}
+            <input bind:checked={$fontStore[key].selected} type="checkbox" />
+            {$fontStore[key].font}
           </label>
         {/each}
       </p>
     </Box>
   {/if}
   <figcaption>
-    {#if $fontStore.selections.length === 0}
+    {#if !$fontStoreMeta.hasAnySelections}
       No fonts selected
     {:else}
-      Selected {$fontStore.selections.length} font{$fontStore.selections.length === 1
+      Selected {$fontStoreMeta.selectionCount} font{$fontStoreMeta.selectionCount === 1
         ? ''
         : 's'}:<br />
-      {#each $fontStore.selections as font}
+      {#each $fontStoreMeta.selections as font}
         <a href={`#${font.slug}`} class="mr-6 hover:underline">{font.font}</a>
       {/each}
     {/if}
     <p class="flex justify-end gap-x-2 annotation">
-      <button on:click={fontStore.clearSelection} disabled={$fontStore.selections.length === 0}>
+      <button on:click={deselectAll} disabled={!$fontStoreMeta.hasAnySelections}>
         Deselect all
       </button>
       <button on:click={selectRandom}>Select Random</button>

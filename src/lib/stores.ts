@@ -12,31 +12,16 @@ export interface FigletRecord {
 }
 
 function makeFontStore() {
-  const base = writable<Record<string, FigletRecord>>({});
-
+  const { subscribe, update, set } = writable<Record<string, FigletRecord>>({});
   const fuse = new Fuse<FigletRecord>([], { includeMatches: true, keys: ['font'] });
 
-  const metadata = derived(base, ($store) => {
-    const corpus = [...Object.values($store)];
-    fuse.setCollection(corpus);
-
-    const searchHits = Object.values($store).filter((v) => v.hit);
-    return {
-      corpus,
-      fuse,
-      keys: Object.keys($store),
-      selections: Object.values($store).filter((v) => v.selected),
-      recordCount: corpus.length,
-      searchHits,
-      searchHitCount: searchHits.length
-    };
-  });
-
   return {
-    // only read from the metadata
-    subscribe: metadata.subscribe,
+    set,
+    update,
+    subscribe,
+    fuse,
     updateRecord(record: FigletRecord) {
-      base.update(($store) => ({
+      update(($store) => ({
         ...$store,
         [record.slug]: { ...record }
       }));
@@ -46,7 +31,7 @@ function makeFontStore() {
       const searchResultsRaw = fuse.search(searchTerm);
       const searchResults = new Set(searchResultsRaw.map((r) => r.item.slug));
 
-      base.update(($store) => {
+      update(($store) => {
         for (const slug of Object.keys($store)) {
           $store[slug].hit = searchResults.has(slug);
         }
@@ -55,7 +40,7 @@ function makeFontStore() {
     },
     // initial load data
     seed(fonts: Fonts[]) {
-      base.update(() =>
+      update(() =>
         fonts
           .map(
             (font) =>
@@ -72,25 +57,35 @@ function makeFontStore() {
             return { ...acc, [cur.slug]: { ...cur, hit: false } };
           }, {})
       );
-    },
-    // render a preview
-    updatePreview(fonts: FigletRecord[], preview: string) {
-      base.update(($store) => {
-        for (const font of fonts) {
-          $store[font.slug].preview = preview;
-        }
-        return { ...$store };
-      });
-    },
-    clearSelection() {
-      base.update(($store) => {
-        for (const slug of Object.keys($store)) {
-          $store[slug].selected = false;
-        }
-        return { ...$store };
-      });
     }
   };
 }
 
-export const fontStore = makeFontStore();
+function makeFontStoreMetadataStore(base: ReturnType<typeof makeFontStore>) {
+  return derived(base, ($store) => {
+    const corpus = [...Object.values($store)];
+    const selections = corpus.filter((v) => v.selected);
+    const searchHits = corpus.filter((v) => v.hit);
+    return {
+      corpus,
+      selections,
+      searchHits,
+      keys: Object.keys($store),
+      recordCount: corpus.length,
+      searchHitCount: searchHits.length,
+      selectionCount: selections.length,
+      hasAnySelections: selections.length > 0
+    };
+  });
+}
+
+function makeFigsleyStore() {
+  const store = makeFontStore();
+  const meta = makeFontStoreMetadataStore(store);
+  return {
+    fontStore: store,
+    fontStoreMeta: meta
+  };
+}
+
+export const { fontStore, fontStoreMeta } = makeFigsleyStore();

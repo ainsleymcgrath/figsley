@@ -1,6 +1,6 @@
 <script lang="ts">
   import UserInput from '$lib/ui/molecules/user-input.svelte';
-  import { fontStore } from '$lib/stores';
+  import { fontStore, fontStoreMeta } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
   import Box from '$lib/ui/atoms/box.svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
@@ -9,7 +9,7 @@
   let text = '';
   let searchTerm: string = '';
   $: fontStore.seed(data.fonts);
-  $: selections = $fontStore.selections;
+  $: selections = $fontStoreMeta.selections;
   $: disabled = !Boolean(text) || !Boolean(selections.length);
   let rendered: Record<string, string>;
 </script>
