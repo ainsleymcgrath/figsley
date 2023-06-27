@@ -61,7 +61,7 @@
         class:opacity-25={searchTerm === ''}
       />
       <span slot="superscript-left" class="text-xs italic">
-        Showing {searchTerm ? $fontStoreMeta.searchHitCount : $fontStoreMeta.corpus.length} of {$fontStore.recordCount}
+        Showing {searchTerm ? $fontStoreMeta.searchHitCount : $fontStoreMeta.corpus.length} of {$fontStoreMeta.recordCount}
         fonts
       </span>
     </Box>
