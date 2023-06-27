@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { fontStore, fontStoreMeta } from '$lib/stores';
+  import { fontStore, fontStoreMeta, fontRender } from '$lib/stores';
   import Box from '../atoms/box.svelte';
   import Underline from '../atoms/underline.svelte';
 
   export let searchTerm = '';
+  export let text = '';
   $: fontStore.search(searchTerm);
 
   let searching = true;
@@ -28,8 +29,9 @@
 {#if searching}
   <Box noBorder>
     <button
-      on:click={() => {
+      on:click={async () => {
         searching = false;
+        await $fontRender(text);
       }}
     >
       <Underline italic>Done</Underline>
