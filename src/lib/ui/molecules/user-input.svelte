@@ -42,7 +42,7 @@
     rows="3"
     bind:this={textarea}
     bind:value={text}
-    class="placeholder-black w-full bg-inherit border-none outline-none"
+    class="w-full bg-inherit border-4 border-black outline-none rounded-lg p-2"
     class:italic={text === ''}
     class:opacity-25={text === ''}
   />

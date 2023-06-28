@@ -17,7 +17,9 @@
   });
 </script>
 
-<UserInput bind:text />
+<figure class="my-10">
+  <UserInput bind:text />
+</figure>
 <!-- <FontPicker {text} bind:searchTerm /> -->
 <figure class="flex flex-wrap gap-12">
   {#each Object.values($fontStoreMeta.selections) as record}
