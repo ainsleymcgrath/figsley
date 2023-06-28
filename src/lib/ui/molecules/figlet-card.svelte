@@ -25,27 +25,14 @@
 </script>
 
 <figure
+  class="w-min overflow-x-scroll overflow-y-hidden"
   out:scale={{ duration: 100, start: 0.8 }}
   in:scale={{ duration: 150, start: 0.8, delay: 75 }}
   on:mouseenter={mouseenter}
   on:mouseleave={mouseleave}
 >
-  <Box highlightBorderOnHover>
-    <h2 slot="superscript-left" id={title} class="flex justify-between font-display mb-1">
-      {title}
-    </h2>
-    <div class="p-5 overflow-scroll">
-      <pre class="font-mono text-xs font-black leading-tight max-w-0">{figletText}</pre>
-    </div>
-    <div slot="subscript-right" class="w-full flex justify-end h-5">
-      {#if hovering}
-        <button on:click={copy} class="icon-sm">
-          <Icon name="copy" />
-        </button>
-        <button on:click={deselct} class="icon-sm">
-          <Icon name="close" />
-        </button>
-      {/if}
-    </div>
-  </Box>
+  <h2 id={title} class="flex justify-between font-display mb-1">
+    {title}
+  </h2>
+  <pre class="font-mono text-xxs font-black leading-tight w-min">{figletText}</pre>
 </figure>

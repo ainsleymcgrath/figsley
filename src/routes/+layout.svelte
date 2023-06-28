@@ -25,7 +25,7 @@
       .
     </p>
   </header>
-  <section class="w-full flex justify-center">
+  <section class="w-full">
     <slot />
   </section>
 </main>
