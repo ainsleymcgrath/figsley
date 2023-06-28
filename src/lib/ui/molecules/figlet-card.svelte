@@ -30,12 +30,12 @@
   on:mouseenter={mouseenter}
   on:mouseleave={mouseleave}
 >
-  <Box highlightBorderOnHover highlightTextOnHover>
+  <Box highlightBorderOnHover>
     <h2 slot="superscript-left" id={title} class="flex justify-between font-display mb-1">
       {title}
     </h2>
     <div class="p-5 overflow-scroll">
-      <pre class="font-mono text-xs font-bol max-w-0">{figletText}</pre>
+      <pre class="font-mono text-xs font-black leading-tight max-w-0">{figletText}</pre>
     </div>
     <div slot="subscript-right" class="w-full flex justify-end h-5">
       {#if hovering}
