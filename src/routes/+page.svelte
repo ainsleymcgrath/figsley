@@ -17,13 +17,10 @@
   });
 </script>
 
-<!-- <div class="grid gap-y-6 w-full sm:w-lg" /> -->
-<!-- <section> -->
-<!--   <UserInput bind:text /> -->
+<UserInput bind:text />
 <!-- <FontPicker {text} bind:searchTerm /> -->
 <figure class="flex flex-wrap gap-12">
   {#each Object.values($fontStoreMeta.selections) as record}
     <FigletCard figletText={record.preview} title={record.font} />
   {/each}
 </figure>
-<!-- </section> -->

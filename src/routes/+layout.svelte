@@ -4,8 +4,8 @@
   import Underline from '$lib/ui/atoms/underline.svelte';
 </script>
 
-<main class="w-full bg-yellow-500 p-3">
-  <header class="mb-10">
+<main class="p-3 grid-cols-1 bg-yellow-500 grid">
+  <header>
     <h1 class="text-5xl font-display font-black">FIGSLEY</h1>
     <p class="font-display text-xs font-light">
       <Underline color="red">
@@ -25,7 +25,5 @@
       .
     </p>
   </header>
-  <section class="w-full">
-    <slot />
-  </section>
+  <slot />
 </main>
