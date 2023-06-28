@@ -5,7 +5,7 @@ export default defineConfig({
   theme: {
     extend: {
       fontFamily: { display: ['Unbounded'], mono: ['IBM Plex Mono'], sans: ['IBM Plex Sans'] },
-      fontSize: { xxs: '0.5rem' },
+      fontSize: { '2xs': '0.5rem', '3xs': '0.3rem' },
     },
   },
   shortcuts: {

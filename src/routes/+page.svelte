@@ -10,7 +10,7 @@
   let searchTerm: string = '';
   $: fontStore.seed(data.fonts);
   onMount(async () => {
-    for (const key of $fontStoreMeta.keys) {
+    for (const key of $fontStoreMeta.keys.slice(0, 50)) {
       $fontStore[key].selected = true;
     }
     await $fontRender(text);

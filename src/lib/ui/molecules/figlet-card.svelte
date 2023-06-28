@@ -34,5 +34,6 @@
   <h2 id={title} class="flex justify-between font-display mb-1">
     {title}
   </h2>
-  <pre class="font-mono text-xxs font-black leading-tight w-min">{figletText}</pre>
+  <pre
+    class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{figletText}</pre>
 </figure>
