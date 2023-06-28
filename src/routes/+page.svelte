@@ -1,10 +1,8 @@
 <script lang="ts">
   import UserInput from '$lib/ui/molecules/user-input.svelte';
-  import { fontStore, fontStoreMeta, fontRender } from '$lib/stores';
+  import { fontStore, fontStoreMeta } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
-  import Box from '$lib/ui/atoms/box.svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
-  import { beforeUpdate } from 'svelte';
 
   export let data;
   let text = 'hi';
