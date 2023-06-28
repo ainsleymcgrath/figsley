@@ -1,21 +1,26 @@
 <script lang="ts">
   import UserInput from '$lib/ui/molecules/user-input.svelte';
-  import { fontStore, fontStoreMeta } from '$lib/stores';
+  import { fontRender, fontStore, fontStoreMeta } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
+  import { onMount } from 'svelte';
 
   export let data;
-  let text = 'hi';
+  let text = 'FIGSLEY';
   let searchTerm: string = '';
   $: fontStore.seed(data.fonts);
+  onMount(async () => {
+    for (const key of $fontStoreMeta.keys) {
+      $fontStore[key].selected = true;
+    }
+    await $fontRender(text);
+  });
 </script>
 
 <div class="grid gap-y-6 w-full sm:w-lg">
   <UserInput bind:text />
-  <FontPicker {text} bind:searchTerm />
+  <!-- <FontPicker {text} bind:searchTerm /> -->
   {#each Object.values($fontStoreMeta.selections) as record}
-    {#if record.preview !== ''}
-      <FigletCard figletText={record.preview} title={record.font} />
-    {/if}
+    <FigletCard figletText={record.preview} title={record.font} />
   {/each}
 </div>
