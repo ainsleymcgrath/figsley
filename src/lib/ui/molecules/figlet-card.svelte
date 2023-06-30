@@ -25,7 +25,7 @@
 </script>
 
 <figure
-  class="w-min overflow-x-scroll overflow-y-hidden"
+  class="w-full"
   out:scale={{ duration: 100, start: 0.8 }}
   in:scale={{ duration: 150, start: 0.8, delay: 75 }}
   on:mouseenter={mouseenter}
@@ -34,6 +34,10 @@
   <h2 id={title} class="flex justify-between font-display mb-1">
     {title}
   </h2>
-  <pre
-    class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{figletText}</pre>
+  <div class="max-w-full overflow-x-scroll">
+    <!-- template in pre tag is way over there bc leading whitespace. CSS can't save us -->
+    <pre
+      class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{figletText}
+    </pre>
+  </div>
 </figure>
