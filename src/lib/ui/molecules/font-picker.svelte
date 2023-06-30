@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fontStore, fontStoreMeta, fontRender } from '$lib/stores';
+  import { tick } from 'svelte';
   import Box from '../atoms/box.svelte';
   import Underline from '../atoms/underline.svelte';
 
@@ -15,7 +16,7 @@
     }
   }
 
-  function selectRandom() {
+  async function selectRandom() {
     deselectAll();
     const randomFontKey = () =>
       $fontStoreMeta.keys[Math.floor(Math.random() * $fontStoreMeta.recordCount)];
@@ -23,9 +24,11 @@
     for (const font of nRandomFonts) {
       $fontStore[font].selected = true;
     }
+    await requestRender();
   }
 
   async function requestRender() {
+    await tick();
     await $fontRender(text);
   }
 </script>
