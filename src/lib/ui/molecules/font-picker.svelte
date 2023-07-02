@@ -3,12 +3,13 @@
   import { tick } from 'svelte';
   import Box from '../atoms/box.svelte';
   import Underline from '../atoms/underline.svelte';
+  import Expandable from '../atoms/expandable.svelte';
 
   export let searchTerm = '';
   export let text = '';
   $: fontStore.search(searchTerm);
 
-  let searching = true;
+  let searching = false;
 
   function deselectAll() {
     for (const selection of $fontStoreMeta.selections) {
@@ -45,20 +46,20 @@
     </button>
   </Box>
 {/if}
-<figure class="grid gap-6">
-  {#if !searching}
+
+<Expandable expanded={searching}>
+  <Box noBorder>
+    <button
+      class="text-left"
+      on:click={() => {
+        searching = true;
+      }}
+    >
+      <Underline italic>Choose fonts</Underline>
+    </button>
+  </Box>
+  <div slot="expanded">
     <Box noBorder>
-      <button
-        class="text-left"
-        on:click={() => {
-          searching = true;
-        }}
-      >
-        <Underline italic>Choose fonts</Underline>
-      </button>
-    </Box>
-  {:else}
-    <Box>
       <input
         class="placeholder-black bg-inherit border-none outline-none"
         type="text"
@@ -88,23 +89,19 @@
         {/each}
       </p>
     </Box>
-  {/if}
-  <figcaption>
-    {#if !$fontStoreMeta.hasAnySelections}
-      No fonts selected
-    {:else}
-      Selected {$fontStoreMeta.selectionCount} font{$fontStoreMeta.selectionCount === 1
-        ? ''
-        : 's'}:<br />
-      {#each $fontStoreMeta.selections as font}
-        <a href={`#${font.slug}`} class="mr-6 hover:underline">{font.font}</a>
-      {/each}
-    {/if}
-    <p class="flex justify-end gap-x-2 annotation">
-      <button on:click={deselectAll} disabled={!$fontStoreMeta.hasAnySelections}>
-        Deselect all
-      </button>
-      <button on:click={selectRandom}>Select Random</button>
-    </p>
-  </figcaption>
-</figure>
+  </div>
+</Expandable>
+{#if !$fontStoreMeta.hasAnySelections}
+  No fonts selected
+{:else}
+  <!-- Selected {$fontStoreMeta.selectionCount} font{$fontStoreMeta.selectionCount === 1 -->
+  <!--   ? '' -->
+  <!--   : 's'}:<br /> -->
+  <!-- {#each $fontStoreMeta.selections as font} -->
+  <!--   <a href={`#${font.slug}`} class="mr-6 hover:underline">{font.font}</a> -->
+  <!-- {/each} -->
+{/if}
+<p class="flex justify-end gap-x-2 annotation">
+  <button on:click={deselectAll} disabled={!$fontStoreMeta.hasAnySelections}> Deselect all </button>
+  <button on:click={selectRandom}>Select Random</button>
+</p>
