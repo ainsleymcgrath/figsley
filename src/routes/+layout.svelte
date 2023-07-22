@@ -1,5 +1,4 @@
 <script lang="ts">
-  import 'virtual:windi.css';
   import '../app.css';
   import Underline from '$lib/ui/atoms/underline.svelte';
 </script>

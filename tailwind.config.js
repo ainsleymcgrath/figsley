@@ -1,6 +1,5 @@
-import { defineConfig } from 'windicss/helpers';
-
-export default defineConfig({
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
     extend: {
@@ -19,4 +18,4 @@ export default defineConfig({
     'underline-hover-focus': 'focus:underline hover:underline outline-0',
   },
   plugins: [],
-});
+};
