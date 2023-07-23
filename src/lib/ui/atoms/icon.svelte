@@ -49,4 +49,4 @@
   $: pathProps = icons[name].path;
 </script>
 
-<svg class="w-6 h-6 inline" {...svgProps}><path {...pathProps} /></svg>
+<svg transition:{draw} class="w-6 h-6 inline" {...svgProps}><path {...pathProps} /></svg>
