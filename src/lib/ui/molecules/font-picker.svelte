@@ -47,7 +47,7 @@
   </Box>
 {/if}
 
-<Expandable expanded={searching}>
+{#if !searching}
   <Box noBorder>
     <button
       class="text-left"
@@ -58,7 +58,8 @@
       <Underline italic>Choose fonts</Underline>
     </button>
   </Box>
-  <div slot="expanded">
+{:else}
+  <div>
     <Box noBorder>
       <input
         class="placeholder-black bg-inherit border-none outline-none"
@@ -73,24 +74,22 @@
         fonts
       </span>
     </Box>
-    <Box>
-      <p class="overflow-scroll h-30">
-        {#each $fontStoreMeta.keys as key (key)}
-          {#if searchTerm === '' || $fontStore[key].hit}
-            <label class="block">
-              <input
-                bind:checked={$fontStore[key].selected}
-                type="checkbox"
-                on:change={requestRender}
-              />
-              {$fontStore[key].font}
-            </label>
-          {/if}
-        {/each}
-      </p>
-    </Box>
+    <p class="overflow-scroll h-20">
+      {#each $fontStoreMeta.keys as key (key)}
+        {#if searchTerm === '' || $fontStore[key].hit}
+          <label class="block">
+            <input
+              bind:checked={$fontStore[key].selected}
+              type="checkbox"
+              on:change={requestRender}
+            />
+            {$fontStore[key].font}
+          </label>
+        {/if}
+      {/each}
+    </p>
   </div>
-</Expandable>
+{/if}
 {#if !$fontStoreMeta.hasAnySelections}
   No fonts selected
 {:else}

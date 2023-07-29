@@ -45,7 +45,7 @@ function makeFontStore() {
                 slug: font.toLowerCase().replace(' ', '-'),
                 hit: false,
                 preview: '',
-              } satisfies FigletRecord)
+              }) satisfies FigletRecord
           )
           .reduce((acc, cur) => {
             return { ...acc, [cur.slug]: { ...cur, hit: false } };

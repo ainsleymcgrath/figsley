@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from '$lib/ui/atoms/icon.svelte';
-  import { scale } from 'svelte/transition';
+  import { fly, scale } from 'svelte/transition';
   import Box from '../atoms/box.svelte';
 
   export let figletText = '';
@@ -24,13 +24,7 @@
   };
 </script>
 
-<figure
-  class="w-full"
-  out:scale={{ duration: 100, start: 0.8 }}
-  in:scale={{ duration: 150, start: 0.8, delay: 75 }}
-  on:mouseenter={mouseenter}
-  on:mouseleave={mouseleave}
->
+<figure class="w-full" on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
   <h2 id={title} class="flex justify-between font-display mb-1">
     {title}
   </h2>

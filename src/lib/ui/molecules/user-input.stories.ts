@@ -7,7 +7,7 @@ export default {
 
 type Story = StoryObj<UserInput>;
 
-export const Primary: Story = {
+export const Base: Story = {
   render: (args) => ({
     Component: UserInput,
     props: args,
@@ -18,13 +18,14 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
+export const Focused: Story = {
   render: (args) => ({
     Component: UserInput,
     props: args,
   }),
   args: {
     expanded: true,
-    text: 'it me',
+    text: 'i focused!',
   },
+  parameters: { pseudo: { focus: true } },
 };
