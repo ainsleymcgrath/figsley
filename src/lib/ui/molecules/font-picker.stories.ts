@@ -1,12 +1,12 @@
 import type { StoryObj } from '@storybook/svelte';
-import FontPicker_2 from './font-picker-2.svelte';
+import FontPicker from './font-picker.svelte';
 import type { Fonts } from 'figlet';
 
 export default {
-  component: FontPicker_2,
+  component: FontPicker,
 };
 
-type Story = StoryObj<FontPicker_2>;
+type Story = StoryObj<FontPicker>;
 const fontOpts = (
   [
     'Wavy',
@@ -31,7 +31,7 @@ const fontOpts = (
 
 export const Primary: Story = {
   render: (args) => ({
-    Component: FontPicker_2,
+    Component: FontPicker,
     props: args,
   }),
   args: {

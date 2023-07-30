@@ -1,21 +1,16 @@
 <script lang="ts">
   import UserInput from '$lib/ui/molecules/user-input.svelte';
-  import { fontRender, fontStore, fontStoreMeta, type FigletRecord } from '$lib/stores';
+  import type { FigletRecord } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
-  import FontPicker from '$lib/ui/molecules/font-picker.svelte';
-  import { fly, scale } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
   import { beforeUpdate, onMount } from 'svelte';
   import AnimateInitial from '$lib/animate-initial.svelte';
-  import FontPicker_2 from '$lib/ui/molecules/font-picker-2.svelte';
+  import FontPicker from '$lib/ui/molecules/font-picker.svelte';
 
   export let data;
   let text = 'F';
   let options: FigletRecord[] = [];
   let selections: FigletRecord[] = [];
-  // $: selections = options.filter((o) => o.selected);
-  $: fontStore.seed(data.fonts);
-
-  onMount(() => {});
 
   let previews: { [slug: string]: string } = {};
 
@@ -31,10 +26,7 @@
           preview: '',
         }) satisfies FigletRecord
     );
-    for (const option of options.slice(0, 4)) {
-      option.selected = true;
-    }
-    // await $fontRender(text);
+    selections = options.slice(0, 4);
   });
 
   beforeUpdate(async () => {
@@ -43,15 +35,16 @@
       ['text', text],
       ...selections.map((s) => ['fonts', s.font]),
     ]);
-    const data = await fetch(new Request(encodeURI(`/api/render/?${params.toString()}`)));
+    const request = new Request(encodeURI(`/api/render/?${params.toString()}`));
+    const data = await fetch(request);
     previews = await data.json();
   });
 </script>
 
-<figure class="my-10">
+<figure class="my-10 grid gap-2 w-min">
   <UserInput bind:text />
+  <FontPicker bind:options bind:selections />
 </figure>
-<FontPicker_2 bind:options bind:selections {text} />
 <figure class="flex flex-wrap gap-12">
   {#each selections as record, i}
     <div
