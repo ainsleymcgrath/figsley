@@ -11,17 +11,27 @@
   export let data;
   let text = 'F';
   let options: FigletRecord[] = [];
-  $: selections = options.filter((o) => o.selected);
+  let selections: FigletRecord[] = [];
+  // $: selections = options.filter((o) => o.selected);
   $: fontStore.seed(data.fonts);
 
-  beforeUpdate(() => {
-    options = $fontStoreMeta.corpus;
-  });
+  onMount(() => {});
 
-  // render every font on initial load
   let previews: { [slug: string]: string } = {};
+
   onMount(async () => {
-    for (const option of options.slice(0, 50)) {
+    options = data.fonts.map(
+      (font) =>
+        ({
+          font,
+          selected: false,
+          searchMatchIndexes: [],
+          slug: font.toLowerCase().replace(' ', '-'),
+          hit: false,
+          preview: '',
+        }) satisfies FigletRecord
+    );
+    for (const option of options.slice(0, 4)) {
       option.selected = true;
     }
     // await $fontRender(text);
@@ -41,7 +51,7 @@
 <figure class="my-10">
   <UserInput bind:text />
 </figure>
-<FontPicker_2 bind:options {text} />
+<FontPicker_2 bind:options bind:selections {text} />
 <figure class="flex flex-wrap gap-12">
   {#each selections as record, i}
     <div
