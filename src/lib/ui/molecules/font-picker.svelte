@@ -7,10 +7,10 @@
   import { fly } from 'svelte/transition';
 
   export let searchTerm = '';
-  let searching = false;
-
   export let options: FigletRecord[] = [];
   export let selections: FigletRecord[] = [];
+
+  let searching = false;
 
   onMount(() => {
     selections = options.filter((o) => o.selected);
@@ -42,14 +42,15 @@
   let input: HTMLInputElement;
 </script>
 
-<figure class="flex gap-x-2 w-96 group">
+<figure class="flex gap-x-1 group">
   <span class="transition-colors duration-150 group-focus-within:text-red-500 flex">
     <Icon name="search" />
   </span>
-  <div class="w-full">
-    <DrawUnderlineOnFocus artificiallyFocused={groupFocused}>
+  <div>
+    <!-- <DrawUnderlineOnFocus artificiallyFocused={groupFocused}> -->
+    <div class="bg-amber-400 rounded-md">
       <input
-        class="placeholder-black bg-inherit border-none outline-none inline w-full"
+        class="p-2 rounded-md placeholder-black border-none outline-none inline bg-inherit"
         type="text"
         placeholder="Search for Figlet fonts"
         bind:value={searchTerm}
@@ -58,7 +59,8 @@
         on:focus={() => (searching = true)}
         bind:this={input}
       />
-    </DrawUnderlineOnFocus>
+    </div>
+    <!-- </DrawUnderlineOnFocus> -->
     <p class="italic text-xs max-w-sm mt-3">
       {#if !selections.length}
         No fonts selected

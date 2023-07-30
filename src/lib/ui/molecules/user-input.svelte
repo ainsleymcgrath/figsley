@@ -18,7 +18,7 @@
   <span class="transition-colors duration-150 group-focus-within:text-red-500">
     <Icon name="edit" />
   </span>
-  <DrawUnderlineOnFocus>
+  <div class="bg-amber-400 rounded-md">
     <textarea
       on:blur={async () => {
         expanded = false;
@@ -29,9 +29,9 @@
       {rows}
       bind:this={textarea}
       bind:value={text}
-      class="w-full bg-inherit outline-none relative"
+      class="placeholder-black w-full outline-none relative text-black bg-inherit p-2 rounded-md"
       class:italic={text === ''}
       class:opacity-25={text === ''}
     />
-  </DrawUnderlineOnFocus>
+  </div>
 </figure>

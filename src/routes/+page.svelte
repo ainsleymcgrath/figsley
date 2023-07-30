@@ -41,7 +41,7 @@
   });
 </script>
 
-<figure class="my-10 grid gap-2 w-min">
+<figure class="my-10 grid gap-2">
   <UserInput bind:text />
   <FontPicker bind:options bind:selections />
 </figure>
