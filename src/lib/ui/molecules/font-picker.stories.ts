@@ -38,12 +38,13 @@ export const Primary: Story = {
     options: fontOpts,
   },
 };
-export const SomeSelections: Story = {
+export const SomeSelectionsExpanded: Story = {
   ...Primary,
   args: {
     options: (() => {
       const select = new Set([2, 5, 8]);
       return fontOpts.map((f, i) => (select.has(i) ? { ...f, selected: true } : { ...f }));
     })(),
+    searching: true,
   },
 };
