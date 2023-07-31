@@ -38,11 +38,10 @@
       .map((i) => options[i]);
   }
 
-  let groupFocused = false;
   let input: HTMLInputElement;
 </script>
 
-<figure class="flex gap-x-1 group">
+<figure class="flex gap-x-1 group max-w-xl justify-self-center w-full">
   <span
     class="pt-2 transition-colors duration-150 group-focus-within:text-red-500 flex"
     class:text-red-500={searching}

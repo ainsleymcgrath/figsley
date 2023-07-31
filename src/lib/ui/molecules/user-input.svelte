@@ -16,11 +16,13 @@
 
 <svelte:window on:keydown={keydown} />
 
-<figure class="flex gap-x-1 max-w-xl group items-center transition-all duration-150">
+<figure
+  class="flex gap-x-1 w-full max-w-xl group justify-self-center items-center transition-all duration-150"
+>
   <span class="transition-colors duration-150 group-focus-within:text-red-500">
     <Icon name="edit" />
   </span>
-  <div class="bg-amber-400 rounded-md w-72">
+  <div class="bg-amber-400 rounded-md w-full">
     <textarea
       on:blur={async () => {
         expanded = false;

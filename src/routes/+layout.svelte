@@ -1,12 +1,12 @@
 <script lang="ts">
   import '../app.css';
   import Underline from '$lib/ui/atoms/underline.svelte';
-  import { slide, fly, fade } from 'svelte/transition';
+  import { fly, fade } from 'svelte/transition';
   import AnimateInitial from '$lib/animate-initial.svelte';
   let headerAnimationComplete = false;
 </script>
 
-<main class="p-3 grid-cols-1 gap-y-8 bg-yellow-500 grid">
+<main class="p-5 md:p-12 lg:p-20 grid-cols-1 gap-y-8 bg-yellow-500 grid">
   <header>
     <AnimateInitial>
       <h1
