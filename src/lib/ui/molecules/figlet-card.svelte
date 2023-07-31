@@ -2,16 +2,18 @@
   import Icon from '$lib/ui/atoms/icon.svelte';
   import { fly, scale } from 'svelte/transition';
   import Box from '../atoms/box.svelte';
+  import { createEventDispatcher } from 'svelte';
+  import type { FigletRecord } from '$lib/stores';
 
   export let figletText = '';
-  // export let record: FigletRecord;
-  export let title = '';
+  export let record: FigletRecord;
 
   const copy = () => {
     navigator.clipboard.writeText(figletText);
   };
+  const dispatch = createEventDispatcher();
   const deselct = () => {
-    // delete previewMap[record.slug];
+    dispatch('deselect', record);
   };
 
   // need artificial hovering b/c of conditional rendered icons
@@ -25,13 +27,23 @@
 </script>
 
 <figure class="w-full" on:mouseenter={mouseenter} on:mouseleave={mouseleave}>
-  <h2 id={title} class="flex justify-between font-display mb-1">
-    {title}
+  <h2 id={record.slug} class="flex justify-between font-display mb-1">
+    {record.font}
   </h2>
   <div class="max-w-full overflow-x-scroll">
     <!-- template in pre tag is way over there bc leading whitespace. CSS can't save us -->
     <pre
       class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{figletText}
     </pre>
+  </div>
+  <div class="w-full flex justify-end h-5">
+    {#if hovering}
+      <button on:click={copy} class="icon-sm">
+        <Icon name="copy" />
+      </button>
+      <button on:click={deselct} class="icon-sm">
+        <Icon name="close" />
+      </button>
+    {/if}
   </div>
 </figure>

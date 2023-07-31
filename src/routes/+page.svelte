@@ -50,7 +50,14 @@
       out:fly={{ duration: 200, y: '-3rem', delay: (i / 3) * 100 }}
       in:fly={{ delay: (i / 3) * 100, duration: 400, y: '3rem' }}
     >
-      <FigletCard figletText={previews[record.font]} title={record.font} />
+      <FigletCard
+        figletText={previews[record.font]}
+        {record}
+        on:deselect={() => {
+          selections.splice(i, 1);
+          selections = selections;
+        }}
+      />
     </div>
   {/each}
 </figure>
