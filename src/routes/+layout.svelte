@@ -1,8 +1,9 @@
 <script lang="ts">
   import '../app.css';
   import Underline from '$lib/ui/atoms/underline.svelte';
-  import { slide, fly } from 'svelte/transition';
+  import { slide, fly, fade } from 'svelte/transition';
   import AnimateInitial from '$lib/animate-initial.svelte';
+  let headerAnimationComplete = false;
 </script>
 
 <main class="p-3 grid-cols-1 gap-y-8 bg-yellow-500 grid">
@@ -10,6 +11,9 @@
     <AnimateInitial>
       <h1
         transition:fly={{ duration: 700, y: '-40%', delay: 200 }}
+        on:introend={() => {
+          headerAnimationComplete = true;
+        }}
         class="text-5xl font-display font-black"
       >
         FIGSLEY
@@ -35,5 +39,11 @@
       </h2>
     </AnimateInitial>
   </header>
-  <slot />
+  {#if headerAnimationComplete}
+    <AnimateInitial>
+      <div in:fade={{ duration: 400 }}>
+        <slot />
+      </div>
+    </AnimateInitial>
+  {/if}
 </main>

@@ -4,6 +4,8 @@
   import { fontRender, fontStoreMeta } from '$lib/stores';
   import Icon from '../atoms/icon.svelte';
   import DrawUnderlineOnFocus from '$lib/draw-underline-on-focus.svelte';
+  import AnimateInitial from '$lib/animate-initial.svelte';
+  import { fade } from 'svelte/transition';
 
   export let text: string = '';
   $: rows = text.split('').filter((s) => s === '\n')?.length + 1;
