@@ -5,7 +5,7 @@
   import AnimateInitial from '$lib/animate-initial.svelte';
 </script>
 
-<main class="p-3 grid-cols-1 bg-yellow-500 grid">
+<main class="p-3 grid-cols-1 gap-y-8 bg-yellow-500 grid">
   <header>
     <AnimateInitial>
       <h1

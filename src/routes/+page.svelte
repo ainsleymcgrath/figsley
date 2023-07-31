@@ -41,7 +41,7 @@
   });
 </script>
 
-<figure class="my-10 grid gap-2">
+<figure class="my-10 grid gap-y-5 w-full items-center justify-center">
   <UserInput bind:text />
   <FontPicker bind:options bind:selections />
 </figure>

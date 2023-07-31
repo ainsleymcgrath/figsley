@@ -43,10 +43,13 @@
 </script>
 
 <figure class="flex gap-x-1 group">
-  <span class="transition-colors duration-150 group-focus-within:text-red-500 flex">
+  <span
+    class="pt-2 transition-colors duration-150 group-focus-within:text-red-500 flex"
+    class:text-red-500={searching}
+  >
     <Icon name="search" />
   </span>
-  <div>
+  <div class="grid w-full">
     <div class="bg-amber-400 rounded-md">
       <input
         class="p-2 rounded-md placeholder-black border-none outline-none inline bg-inherit"
@@ -64,7 +67,7 @@
         on:click={() => {
           searching = !searching;
         }}
-        class="flex gap-x-2 items-center pl-2 py-1"
+        class="flex gap-x-2 items-center pl-2"
       >
         <span>
           {#if !selections.length}
@@ -82,11 +85,10 @@
       </button>
     </p>
     <p
-      class="overflow-scroll transition-all ease-in-out duration-300 bg-amber-400 rounded-md"
+      class="overflow-scroll px-2 transition-all ease-in-out duration-300 bg-amber-400 rounded-md"
       class:h-32={searching}
       class:h-0={!searching}
-      class:p-0={!searching}
-      class:p-2={searching}
+      class:my-2={searching}
     >
       {#each options as option, i (option.slug)}
         <label
@@ -104,8 +106,8 @@
         </label>
       {/each}
     </p>
-    <p class="flex justify-end gap-x-2 annotation text-xs">
-      <button on:click={deselectAll}> Deselect all </button>
+    <p class="pl-2 flex gap-x-2 underline text-xs text-amber-900">
+      <button on:click={deselectAll}>Deselect all</button>
       <button on:click={selectRandom}>Select Random</button>
     </p>
   </div>
