@@ -5,16 +5,25 @@
   import { createEventDispatcher } from 'svelte';
   import type { FigletRecord } from '$lib/stores';
 
-  export let figletText = '';
+  export let text = '';
   export let record: FigletRecord;
 
   const copy = () => {
-    navigator.clipboard.writeText(figletText);
+    navigator.clipboard.writeText(text);
   };
   const dispatch = createEventDispatcher();
   const deselct = () => {
     dispatch('deselect', record);
   };
+
+  async function requestRender() {
+    if (text === '') return;
+    const params = new URLSearchParams([['text', text]]);
+    const request = new Request(encodeURI(`/api/render/${record.font}/?${params.toString()}`));
+    const data = await fetch(request);
+    return data.text();
+  }
+  let renderedResponse = requestRender();
 
   // need artificial hovering b/c of conditional rendered icons
   let hovering = false;
@@ -33,7 +42,7 @@
   <div class="max-w-full overflow-x-scroll">
     <!-- template in pre tag is way over there bc leading whitespace. CSS can't save us -->
     <pre
-      class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{figletText}
+      class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{#await renderedResponse then text}{text}{/await}
     </pre>
   </div>
   <div class="w-full flex justify-end h-5">

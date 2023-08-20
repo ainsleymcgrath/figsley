@@ -6,6 +6,8 @@
   import { beforeUpdate, onMount } from 'svelte';
   import AnimateInitial from '$lib/animate-initial.svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
+  import { flip } from 'svelte/animate';
+  import { quintOut } from 'svelte/easing';
 
   export let data;
   let text = 'F';
@@ -27,17 +29,6 @@
     );
     selections = options.slice(0, 10);
   });
-
-  beforeUpdate(async () => {
-    if (text === '') return;
-    const params = new URLSearchParams([
-      ['text', text],
-      ...selections.map((s) => ['fonts', s.font]),
-    ]);
-    const request = new Request(encodeURI(`/api/render/?${params.toString()}`));
-    const data = await fetch(request);
-    previews = await data.json();
-  });
 </script>
 
 <figure class="my-10 grid gap-y-5 w-full items-center">
@@ -45,13 +36,14 @@
   <FontPicker bind:options bind:selections />
 </figure>
 <figure class="flex flex-wrap gap-12">
-  {#each selections as record, i}
+  {#each selections as record, i (record.slug)}
     <div
-      out:fly={{ duration: 200, y: '-3rem', delay: (i / 3) * 100 }}
+      out:fly={{ duration: 200, y: '-3rem', delay: 0 }}
       in:fly={{ delay: (i / 3) * 100, duration: 400, y: '3rem' }}
+      animate:flip={{ duration: 400, delay: 100 }}
     >
       <FigletCard
-        figletText={previews[record.font]}
+        {text}
         {record}
         on:deselect={() => {
           selections.splice(i, 1);
