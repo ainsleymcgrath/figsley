@@ -40,7 +40,7 @@
     <div
       out:fly={{ duration: 200, y: '-3rem', delay: 0 }}
       in:fly={{ delay: (i / 3) * 100, duration: 400, y: '3rem' }}
-      animate:flip={{ duration: 400, delay: 100 }}
+      animate:flip={{ duration: (distance) => 400 * Math.sqrt(distance), delay: 100 }}
     >
       <FigletCard
         {text}

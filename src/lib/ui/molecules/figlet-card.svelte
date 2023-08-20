@@ -2,7 +2,7 @@
   import Icon from '$lib/ui/atoms/icon.svelte';
   import { fly, scale } from 'svelte/transition';
   import Box from '../atoms/box.svelte';
-  import { createEventDispatcher } from 'svelte';
+  import { beforeUpdate, createEventDispatcher } from 'svelte';
   import type { FigletRecord } from '$lib/stores';
 
   export let text = '';
@@ -16,14 +16,16 @@
     dispatch('deselect', record);
   };
 
+  let rendered = '';
+
   async function requestRender() {
     if (text === '') return;
     const params = new URLSearchParams([['text', text]]);
     const request = new Request(encodeURI(`/api/render/${record.font}/?${params.toString()}`));
     const data = await fetch(request);
-    return data.text();
+    rendered = await data.text();
   }
-  let renderedResponse = requestRender();
+  beforeUpdate(requestRender);
 
   // need artificial hovering b/c of conditional rendered icons
   let hovering = false;
@@ -41,8 +43,7 @@
   </h2>
   <div class="max-w-full overflow-x-scroll">
     <!-- template in pre tag is way over there bc leading whitespace. CSS can't save us -->
-    <pre
-      class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{#await renderedResponse then text}{text}{/await}
+    <pre class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{rendered}
     </pre>
   </div>
   <div class="w-full flex justify-end h-5">
