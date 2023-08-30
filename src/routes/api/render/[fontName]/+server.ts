@@ -20,6 +20,5 @@ export async function GET({ url, params }) {
     text: url.searchParams.get('text'),
   });
   const rendered = Fonts.render(inputText, fontName);
-  console.log(rendered);
   return text(rendered);
 }
