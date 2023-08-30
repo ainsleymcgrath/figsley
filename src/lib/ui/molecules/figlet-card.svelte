@@ -40,9 +40,8 @@
     {record.font}
   </h2>
   <div class="max-w-full overflow-x-scroll">
-    <!-- template in pre tag is way over there bc leading whitespace. CSS can't save us -->
-    <pre class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{rendered}
-    </pre>
+    <pre
+      class="font-mono text-3xs sm:text-2xs md:text-xs font-black leading-tight w-min">{rendered}</pre>
   </div>
   <div class="w-full flex justify-end h-5">
     {#if hovering}
@@ -55,3 +54,9 @@
     {/if}
   </div>
 </figure>
+
+<style>
+  pre {
+    user-select: all;
+  }
+</style>
