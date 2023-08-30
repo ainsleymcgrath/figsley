@@ -1,7 +1,5 @@
 <script lang="ts">
   import Icon from '$lib/ui/atoms/icon.svelte';
-  import { fly, scale } from 'svelte/transition';
-  import Box from '../atoms/box.svelte';
   import { beforeUpdate, createEventDispatcher } from 'svelte';
   import type { FigletRecord } from '$lib/stores';
 
@@ -9,7 +7,7 @@
   export let record: FigletRecord;
 
   const copy = () => {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(rendered);
   };
   const dispatch = createEventDispatcher();
   const deselct = () => {

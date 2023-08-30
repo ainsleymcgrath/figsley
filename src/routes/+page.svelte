@@ -3,8 +3,7 @@
   import type { FigletRecord } from '$lib/stores';
   import FigletCard from '$lib/ui/molecules/figlet-card.svelte';
   import { fly } from 'svelte/transition';
-  import { beforeUpdate, onMount } from 'svelte';
-  import AnimateInitial from '$lib/animate-initial.svelte';
+  import { onMount } from 'svelte';
   import FontPicker from '$lib/ui/molecules/font-picker.svelte';
   import { flip } from 'svelte/animate';
   import { quintOut } from 'svelte/easing';
@@ -13,7 +12,6 @@
   let text = 'F';
   let options: FigletRecord[] = [];
   let selections: FigletRecord[] = [];
-  let previews: { [slug: string]: string } = {};
 
   onMount(async () => {
     options = data.fonts.map(
@@ -40,7 +38,12 @@
     <div
       out:fly={{ duration: 200, y: '-3rem', delay: 0 }}
       in:fly={{ delay: (i / 3) * 100, duration: 400, y: '3rem' }}
-      animate:flip={{ duration: (distance) => 400 * Math.sqrt(distance), delay: 100 }}
+      animate:flip={{
+        easing: quintOut,
+        duration: (distance) => {
+          return (400 * Math.sqrt(distance)) / 10;
+        },
+      }}
     >
       <FigletCard
         {text}
